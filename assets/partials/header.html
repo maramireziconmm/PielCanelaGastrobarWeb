@@ -1,14 +1,29 @@
-<nav class="site-nav">
+<nav class="site-nav" aria-label="Principal">
+  <div class="nav-top container" style="display:flex;align-items:center;justify-content:space-between">
+    <a class="brand" href="index.html" aria-label="Ir a inicio">
+      <img src="assets/images/0-Logo.jpg" alt="Piel Canela logo" class="logo" />
+    </a>
+
+    <!-- Botón hamburguesa (visible en móvil) -->
+    <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Abrir menú">
+      <!-- icono hamburguesa -->
+      <svg class="icon-hamb" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="#2b2f36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <!-- icono cerrar (se usa oculto / solo visual) -->
+      <svg class="icon-close" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="display:none">
+        <path d="M6 6l12 12M6 18L18 6" stroke="#2b2f36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
   <div class="nav-inner container">
-    <div class="brand">
-      <a href="index.html"><img src="assets/images/0-Logo.jpg" alt="Piel Canela logo" class="logo" /></a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Especialidades</a></li>
-      <li><a href="raciones.html">Raciones</a></li>
-      <li><a href="menus.html">Menús</a></li>
-      <li><a href="vinos.html">Carta Vinos</a></li>
-      <li><a href="contacto.html">Contacto</a></li>
+    <ul id="primary-navigation" class="nav-links" role="menubar" aria-label="Menú principal">
+      <li role="none"><a role="menuitem" href="index.html">Especialidades</a></li>
+      <li role="none"><a role="menuitem" href="raciones.html">Raciones</a></li>
+      <li role="none"><a role="menuitem" href="menus.html">Menús</a></li>
+      <li role="none"><a role="menuitem" href="vinos.html">Carta Vinos</a></li>
+      <li role="none"><a role="menuitem" href="contacto.html">Contacto</a></li>
     </ul>
   </div>
 </nav>
