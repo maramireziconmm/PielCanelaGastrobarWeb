@@ -1,6 +1,5 @@
 /* Piel Canela — estilos principales
-   Versión: 2026-01-23
-   Nota: incluye ajustes para que las imágenes no crezcan y se recorten correctamente.
+   Versión: 2026-01-23 (responsive con menú móvil)
 */
 
 :root{
@@ -23,12 +22,22 @@ body{margin:0;background:var(--bg);color:var(--primary);line-height:1.6;-webkit-
 a{color:inherit}
 
 /* NAV y header */
-.site-nav{background:transparent;padding:18px 0;position:relative;z-index:20}
-.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.site-nav{background:transparent;padding:10px 0;position:relative;z-index:50}
+.nav-top{padding:6px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding-top:6px}
+.brand{display:flex;align-items:center;gap:12px}
 .logo{height:56px;border-radius:50%;display:block;object-fit:contain}
-.nav-links{list-style:none;display:flex;gap:28px;margin:0;padding:0}
-.nav-links a{text-decoration:none;color:var(--muted);font-weight:500}
-.nav-links a:hover{color:var(--accent)}
+.nav-links{list-style:none;display:flex;gap:28px;margin:0;padding:0;align-items:center}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;padding:8px 6px;border-radius:6px}
+.nav-links a:hover{color:var(--accent);background:rgba(45,55,72,0.03)}
+
+/* Botón hamburguesa (hidden desktop) */
+.nav-toggle{
+  display:none;
+  background:transparent;border:0;padding:8px;border-radius:8px;cursor:pointer;
+  align-items:center;justify-content:center;
+}
+.nav-toggle:focus{outline:2px solid rgba(45,55,72,0.12);}
 
 /* HERO y rejillas */
 .hero{align-items:center;gap:30px;margin-top:20px;display:grid;grid-template-columns:1fr 420px}
@@ -57,7 +66,7 @@ a{color:inherit}
 .feature-icon{width:56px;height:56px;border-radius:50%;background:#3a3f49;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:10px}
 .image-card img{width:100%;border-radius:8px;display:block}
 
-/* MENUS y miniaturas */
+/* MENUS y miniaturas - comportamiento básico */
 .menu-grid .menu-item img,
 .menu-item img {
   width:100%;
@@ -74,15 +83,15 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-  object-fit: cover; /* mejora cuando hay ancho/alto fijos */
+  object-fit: cover;
 }
 
 /* Hero: limita la altura de la imagen y fuerza recorte agradable */
 .hero-image img {
   width: 100%;
-  max-height: 560px;     /* altura segura para hero en pantallas grandes */
+  max-height: 560px;
   height: 100%;
-  object-fit: cover;     /* recorta sin deformar */
+  object-fit: cover;
   border-radius: 12px;
 }
 
@@ -90,7 +99,7 @@ img {
 .menu-grid .menu-item img,
 .menu-item img {
   width: 100%;
-  height: 220px;         /* altura uniforme para miniaturas de carta */
+  height: 220px;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -134,18 +143,66 @@ blockquote footer{margin-top:8px;color:var(--muted);font-size:0.9rem}
 .footer-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:start}
 .footer-nav a{color:var(--muted);text-decoration:none}
 
-/* Controles para imágenes con nombres problemáticos: si la imagen no existe, evita que el contenedor colapse */
-.menu-item img[alt],
-.card img[alt],
-.hero-image img[alt] {
-  background: linear-gradient(180deg,#f8fafb,#f3f5f7);
-}
-
 /* Accesibilidad y pequeñas mejoras */
 h1,h2,h3,h4{color:var(--accent);margin:0 0 12px;font-weight:700}
 p{margin:0 0 16px;color:var(--muted)}
 
-/* Responsivo */
+/* ----- Estilos del menú móvil ----- */
+
+/* En pantallas grandes, nav-links se muestran en fila (ya por defecto).
+   En móvil, convertimos el menú en un panel desplegable. */
+@media (max-width:900px){
+  .container{padding:18px}
+  .hero{grid-template-columns:1fr}
+  .hero .hero-text h1{font-size:36px}
+  .hero-image img { max-height:360px; }
+  .menu-grid .menu-item img,
+  .cards img { height:160px; }
+
+  /* mostrar el botón hamburguesa */
+  .nav-toggle{display:flex}
+
+  /* nav-inner y nav-links ajustes */
+  .nav-inner{padding-top:8px}
+  .nav-links{
+    /* keep it in flow but collapsed by max-height */
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    margin:0;
+    padding:8px;
+    background:var(--bg);
+    border-radius:8px;
+    box-shadow: 0 8px 24px rgba(34,41,47,0.06);
+    position:relative;
+    overflow:hidden;
+    max-height:0;
+    transition: max-height 320ms ease, padding 220ms ease;
+  }
+
+  .nav-links a{
+    padding:12px 10px;
+    border-radius:6px;
+    color:var(--muted);
+  }
+
+  /* Cuando el nav esté abierto (site-nav.open), mostramos el panel */
+  .site-nav.open .nav-links{
+    max-height:420px; /* suficiente para listar los enlaces */
+    padding:12px;
+  }
+
+  /* Si quieres que el panel cubra toda la anchura (opcional),
+     descomenta y ajusta:
+  .nav-links { position:fixed; top:68px; left:12px; right:12px; z-index:60; }
+  .site-nav.open .nav-links { max-height:calc(100vh - 80px); overflow:auto; }
+  */
+
+  /* un pequeño ajuste para el logo */
+  .logo{height:48px}
+}
+
+/* Responsivo intermedio */
 @media (max-width:1100px){
   .container{padding:22px}
   .hero{grid-template-columns:1fr 360px}
@@ -154,18 +211,7 @@ p{margin:0 0 16px;color:var(--muted)}
   .hero-image img { max-height:480px; }
 }
 
-@media (max-width:900px){
-  .grid.two-col,.grid.three-col,.grid.four-col{grid-template-columns:1fr}
-  .testimonials-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .hero{grid-template-columns:1fr}
-  .hero .hero-text h1{font-size:36px}
-  .hero-image img { max-height:360px; }
-  .menu-grid .menu-item img,
-  .cards img { height:160px; }
-}
-
-/* Pequeñas animaciones / transiciones (opcional) */
+/* transiciones y hover */
 img, .card, .menu-item {transition: transform 200ms ease, box-shadow 200ms ease;}
 .menu-item:hover img, .card:hover img {transform: scale(1.02);}
 
