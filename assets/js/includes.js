@@ -1,6 +1,9 @@
-// Carga de partials y menú móvil
-// loadInclude devuelve una Promise para poder inicializar el menú después de la carga.
+// Carga de partials y manejo robusto del menú móvil.
+// Usa event delegation para que el botón hamburguesa funcione incluso si el header
+// se inyecta dinámicamente o si el usuario tiene el header inline.
+
 function loadInclude(id, path) {
+  // Intenta cargar el partial; en caso de fallo devuelve '' para no bloquear.
   return fetch(path).then(r => {
     if (!r.ok) return Promise.reject(new Error('no include: ' + path));
     return r.text();
@@ -9,65 +12,97 @@ function loadInclude(id, path) {
     if (el) el.innerHTML = html;
     return html;
   }).catch((err) => {
-    // si falla, mostramos en consola (no bloquea la página)
     console.warn('Include failed:', path, err);
     return Promise.resolve('');
   });
 }
 
+// Inicialización adicional: accesibilidad y comportamiento del menú móvil
 function initMobileNav() {
-  const siteNav = document.querySelector('.site-nav');
-  const navToggle = document.querySelector('.nav-toggle');
-  const navLinks = document.querySelector('.nav-links');
-
-  if (!siteNav || !navToggle || !navLinks) return;
-
-  // Función para actualizar estado accesible
-  function setOpen(open) {
-    siteNav.classList.toggle('open', open);
-    navToggle.setAttribute('aria-expanded', String(open));
-    // alternar iconos
-    const icHamb = navToggle.querySelector('.icon-hamb');
-    const icClose = navToggle.querySelector('.icon-close');
-    if (icHamb && icClose) {
-      icHamb.style.display = open ? 'none' : '';
-      icClose.style.display = open ? '' : 'none';
-    }
-  }
-
-  // Toggle on click
-  navToggle.addEventListener('click', function (e) {
-    e.stopPropagation();
-    const isOpen = siteNav.classList.contains('open');
-    setOpen(!isOpen);
-  });
-
-  // Close when clicking a link (good UX)
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => setOpen(false));
-  });
-
-  // Close when clicking outside
+  // No dependemos de querySelector aquí para soportar header inline o inyectado más tarde.
+  // Usamos event delegation: escuchamos clicks en document y detectamos .nav-toggle y enlaces del nav.
   document.addEventListener('click', function (e) {
-    if (!siteNav.classList.contains('open')) return;
-    if (!siteNav.contains(e.target)) setOpen(false);
+    const toggle = e.target.closest('.nav-toggle');
+    if (toggle) {
+      // Encontrar el contenedor .site-nav más cercano
+      const siteNav = toggle.closest('.site-nav');
+      if (!siteNav) return;
+      const willOpen = !siteNav.classList.contains('open');
+      siteNav.classList.toggle('open', willOpen);
+      toggle.setAttribute('aria-expanded', String(willOpen));
+      // alternar iconos si existen
+      const icHamb = toggle.querySelector('.icon-hamb');
+      const icClose = toggle.querySelector('.icon-close');
+      if (icHamb && icClose) {
+        icHamb.style.display = willOpen ? 'none' : '';
+        icClose.style.display = willOpen ? '' : 'none';
+      }
+      // prevent click from bubbling further (avoid immediately closing by outside click handler)
+      e.stopPropagation();
+      return;
+    }
+
+    // Si clic en enlace dentro del nav (delegación), cerramos el menú (UX típico)
+    const navLink = e.target.closest('.nav-links a');
+    if (navLink) {
+      const siteNav = document.querySelector('.site-nav');
+      const toggleBtn = document.querySelector('.nav-toggle');
+      if (siteNav) siteNav.classList.remove('open');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+      // swap icons back if needed
+      if (toggleBtn) {
+        const icHamb = toggleBtn.querySelector('.icon-hamb');
+        const icClose = toggleBtn.querySelector('.icon-close');
+        if (icHamb && icClose) { icHamb.style.display = ''; icClose.style.display = 'none'; }
+      }
+    }
   });
 
-  // Close on ESC
+  // Cerrar al pulsar fuera (si está abierto)
+  document.addEventListener('click', function (e) {
+    const siteNav = document.querySelector('.site-nav');
+    if (!siteNav) return;
+    if (!siteNav.classList.contains('open')) return;
+    // Si el click no ocurrió dentro del siteNav, cerramos
+    if (!siteNav.contains(e.target)) {
+      siteNav.classList.remove('open');
+      const toggleBtn = document.querySelector('.nav-toggle');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+      if (toggleBtn) {
+        const icHamb = toggleBtn.querySelector('.icon-hamb');
+        const icClose = toggleBtn.querySelector('.icon-close');
+        if (icHamb && icClose) { icHamb.style.display = ''; icClose.style.display = 'none'; }
+      }
+    }
+  });
+
+  // Cerrar con ESC
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && siteNav.classList.contains('open')) {
-      setOpen(false);
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      const siteNav = document.querySelector('.site-nav');
+      if (siteNav && siteNav.classList.contains('open')) {
+        siteNav.classList.remove('open');
+        const toggleBtn = document.querySelector('.nav-toggle');
+        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        if (toggleBtn) {
+          const icHamb = toggleBtn.querySelector('.icon-hamb');
+          const icClose = toggleBtn.querySelector('.icon-close');
+          if (icHamb && icClose) { icHamb.style.display = ''; icClose.style.display = 'none'; }
+        }
+      }
     }
   });
 }
 
-// Cargar header y footer y luego inicializar el menú
+// Carga los partials y luego asegura la inicialización del nav.
+// Si no puedes usar fetch por file://, loadInclude devolverá '' y aún así initMobileNav funcionará (delegación).
 document.addEventListener('DOMContentLoaded', function () {
-  Promise.all([
+  // Intentamos cargar partials; si fallan, no bloqueamos.
+  Promise.allSettled([
     loadInclude('site-header', 'assets/partials/header.html'),
     loadInclude('site-footer', 'assets/partials/footer.html')
   ]).then(() => {
-    // inicializa menú móvil (si existe)
+    // Inicializar comportamiento del menú inmediatamente (event delegation)
     initMobileNav();
   });
 });
