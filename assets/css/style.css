@@ -226,3 +226,71 @@ img { -webkit-user-drag: auto; user-select: auto; /* ensure images visible and i
 /* small visual transitions */
 img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease; }
 .menu-item:hover img, .card:hover img { transform: scale(1.02); }
+
+/* ===== FIX MÓVIL: asegurar stack y texto legible en Essence / Specialties / Strengths ===== */
+@media (max-width: 900px) {
+
+  /* Forzar stack en los layouts que estaban en dos columnas */
+  .essence .two-col,
+  .specialties .specialties-layout,
+  .specialties .cards,
+  .strengths .four-col,
+  .strengths > .container {
+    grid-template-columns: 1fr !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* Asegurar que los bloques hijos ocupen todo el ancho y no queden con width fijo */
+  .essence .two-col > div,
+  .essence .image-card,
+  .specialties .cards > .feature.card,
+  .specialties .big-image,
+  .strengths .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important; /* permite encoger en grid/flex */
+  }
+
+  /* Quitar restricciones de ancho en párrafos para evitar saltos de línea exagerados */
+  .essence .two-col > div:first-child p,
+  .specialties .feature p,
+  .strengths p,
+  .essence p {
+    max-width: none !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Forzar las imágenes a adaptarse al contenedor (evita scroll interno y recortes raros) */
+  .essence .image-card img,
+  .specialties .big-image img,
+  .specialties .cards img,
+  .strengths .card img,
+  .hero .hero-image img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Asegurar que hero ordene texto+botones antes que la imagen (ya estaba, reforzamos) */
+  .hero { grid-template-columns: 1fr !important; }
+  .hero .hero-text { order: 1 !important; }
+  .hero .hero-actions { order: 1 !important; }
+  .hero .hero-image { order: 2 !important; }
+
+  /* Evitar scroll horizontal global y en contenedores */
+  html, body, .container, .essence, .specialties, .strengths {
+    overflow-x: hidden !important;
+  }
+
+  /* Ajustes de padding para que no quede contenido pegado al borde */
+  .container, .essence, .specialties, .strengths, .testimonials {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
