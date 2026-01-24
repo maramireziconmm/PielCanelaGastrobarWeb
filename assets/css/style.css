@@ -1,191 +1,180 @@
 /* ==========================================================
-   Piel Canela — style.css (rediseño profesional y moderno)
-   Reemplaza completamente assets/css/style.css con este fichero.
-   - Mobile-first, responsive, tipografía y espaciado refinados
-   - Imágenes homogéneas (ratio y recorte consistente)
-   - Tarjetas limpias y legibles para raciones, especialidades y menús
-   - Sección strengths (Puntos fuertes) full-bleed segura
-   - Mantiene la sección testimonios sin cambios estructurales
-   Fecha: 2026-01-24 (versión profesional)
+   Piel Canela — Hoja de estilo profesional y responsive (2026)
+   Implementa la Guía de Estilo: paleta (salvia, carbón, arena),
+   tipografías (Playfair Display + Inter), imágenes homogéneas,
+   layouts responsive y componentes elegantes.
+   Reemplaza: assets/css/style.css
    ========================================================== */
 
-/* ---------------- Variables y reset ---------------- */
-:root{
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --muted: #6b7280;
-  --muted-2: #98a0a6;
-  --accent: #22272b;
-  --primary: #1f2933;
-  --brand: #2bb7a6;        /* turquesa brand */
-  --brand-2: #31c2ae;      /* lighter turquesa */
-  --card: #f7f8f9;
-  --muted-card: #eef3f3;
-  --shadow: rgba(15,15,15,0.06);
-  --radius: 14px;
-  --container: 1120px;
+/* ---------------- Import recommended fonts (add to HTML <head>) */
+/* Example to copy into <head>:
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+*/
 
-  /* image heights (mobile-first) */
+/* ---------------- Variables & Reset (mobile-first) ---------------- */
+:root{
+  --brand: #8AA89A;      /* verde salvia (principal) */
+  --brand-2: #31C2AE;    /* acento turquesa */
+  --charcoal: #1F2933;   /* texto principal / carbón */
+  --sand: #EAE0D6;       /* arena cálida */
+  --muted: #6B7280;      /* texto secundario */
+  --bg: #FFFFFF;         /* fondo limpio */
+  --card: #FFFFFF;
+  --card-soft: #F5F7F6;
+  --shadow: rgba(15,15,15,0.06);
+  --radius: 12px;
+
   --img-xs: 140px;
   --img-sm: 180px;
   --img-md: 220px;
   --img-lg: 320px;
 
+  --container: 1120px;
   --bp-sm: 520px;
   --bp-md: 900px;
   --bp-lg: 1200px;
-
-  --ease: cubic-bezier(.2,.9,.2,1);
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 /* Reset */
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);-webkit-font-smoothing:antialiased}
-img{max-width:100%;height:auto;display:block;object-fit:cover}
-a{color:inherit}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--charcoal); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+a { color: inherit; text-decoration: none; }
 
 /* Container */
-.container{max-width:var(--container);margin:0 auto;padding:20px;}
+.container { max-width: var(--container); margin: 0 auto; padding: 18px; width: 100%; }
 
-/* Utility: media wrapper with consistent ratio */
-.media {
-  width:100%;
-  overflow:hidden;
-  background: linear-gradient(180deg,#f5f7f7,#eef3f3);
-  border-radius: calc(var(--radius) - 4px);
-}
-.media.aspect-16-9 { aspect-ratio: 16/9; }
-.media.aspect-4-3  { aspect-ratio: 4/3; }
-.media .img-cover, .img-cover { width:100%; height:100%; object-fit:cover; display:block; }
+/* Utility: media box to control ratio and crop */
+.media { width: 100%; overflow: hidden; border-radius: calc(var(--radius) - 2px); background: linear-gradient(180deg,#f8faf9,#f3f5f5); }
+.media.aspect-16-9 { aspect-ratio: 16 / 9; }
+.media.aspect-4-3 { aspect-ratio: 4 / 3; }
+.img-cover { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* Typography */
-h1,h2,h3,h4{color:var(--primary);margin:0}
-h1{font-size:28px;font-weight:800;line-height:1.02}
-h2.section-title{font-size:22px;font-weight:800;margin-bottom:8px}
-h3{font-size:18px;font-weight:700}
-p{margin:0 0 12px;color:var(--muted)}
+:root { --serif: "Playfair Display", Georgia, serif; --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+h1, h2, h3, h4 { margin: 0; font-family: var(--serif); color: var(--charcoal); }
+h1 { font-size: 28px; line-height: 1.02; font-weight: 700; }
+h2.section-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+h3 { font-size: 18px; font-weight: 700; }
+p { margin: 0 0 12px; color: var(--muted); font-family: var(--sans); }
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;cursor:pointer;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.btn.primary{background:var(--primary);color:white;box-shadow:0 6px 18px rgba(34,41,47,0.06)}
-.btn.ghost{background:transparent;border:1px solid #d6dbdb;color:var(--primary)}
+.btn { display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; transition: transform .16s ease, box-shadow .16s ease; }
+.btn--primary { background: var(--brand); color: white; box-shadow: 0 8px 24px var(--shadow); border: none; }
+.btn--ghost { background: transparent; border: 1px solid rgba(31,41,51,0.06); color: var(--charcoal); }
 
-/* Header (light) */
-.site-nav{padding:14px 0;background:transparent;position:relative;z-index:50}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{height:56px;border-radius:50%;object-fit:contain}
+/* Header */
+.site-nav { padding: 14px 0; position: relative; z-index: 60; background: transparent; }
+.nav-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.logo { height:56px; display:block; }
 
 /* Mobile nav toggle */
-.nav-toggle{display:none;background:transparent;border:0;padding:8px}
+.nav-toggle { display: none; background:transparent; border:0; padding:8px; }
 
-/* HERO - mobile first (stacked) */
-.hero{padding:8px 0}
-.hero .hero-text h1{font-size:28px;margin-bottom:10px}
-.hero .hero-text p{color:var(--muted-2);max-width:60ch}
-.hero .hero-actions{display:flex;gap:10px;margin-top:12px}
+/* ================= Layouts: Mobile-first ================= */
 
-/* Sections baseline */
-section{padding:28px 0}
-.tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border-radius:999px;font-weight:700;color:var(--muted);margin-bottom:10px}
+/* HERO (stacked on mobile) */
+.hero { padding: 10px 0 22px; display:block; }
+.hero .hero-text h1 { font-family: var(--serif); font-size: 28px; }
+.hero .hero-text p { color: var(--muted); font-family: var(--sans); margin-top:8px; }
+.hero-actions { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
 
-/* Card base */
+/* Sections: spacing */
+section { padding: 28px 0; }
+.tag { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background: var(--card-soft); color: var(--muted); font-weight:700; }
+
+/* Card base (modern, soft) */
 .card {
-  background:var(--surface);
-  border-radius:var(--radius);
-  overflow:hidden;
-  border:1px solid rgba(15,15,15,0.03);
-  box-shadow: 0 8px 24px var(--shadow);
-  transition: transform .18s var(--ease),box-shadow .18s var(--ease);
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(15,15,15,0.03);
+  box-shadow: 0 10px 30px var(--shadow);
+  transition: transform .16s ease, box-shadow .16s ease;
 }
-.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,15,15,0.08)}
+.card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(15,15,15,0.08); }
 
-/* ---------------- RACIONES / menu-grid (cards) ---------------- */
-/* Mobile: single column list with media, title, desc, price */
-.menu-grid{display:grid;grid-template-columns:1fr;gap:18px}
-.menu-item.card{display:flex;flex-direction:column}
-.menu-item .media{height:var(--img-sm);border-radius:calc(var(--radius) - 2px)}
-.menu-item .content{padding:16px 18px;display:flex;flex-direction:column;gap:6px}
-.menu-item .title{font-weight:800;color:var(--primary)}
-.menu-item .desc{color:var(--muted);font-size:0.95rem}
-.menu-item .price{font-weight:800;color:var(--primary);margin-top:6px}
+/* ---------------- RACIONES (menu-grid) ---------------- */
+/* Mobile: stacked list, compact cards */
+.menu-grid { display:grid; grid-template-columns: 1fr; gap: 18px; }
+.menu-item.card { display:flex; flex-direction: column; background: var(--card); border-radius: var(--radius); overflow: hidden; border:1px solid rgba(15,15,15,0.03); }
+.menu-item .media { height: var(--img-sm); }
+.menu-item .content { padding: 14px 16px; display:flex; flex-direction:column; gap:8px; }
+.menu-item .title { font-family: var(--serif); font-weight:700; color:var(--charcoal); font-size:18px; }
+.menu-item .desc { color:var(--muted); font-size:0.95rem; }
+.menu-item .price { color:var(--charcoal); font-weight:800; margin-top:8px; }
 
-/* Make images slightly smaller to avoid giant crops */
-.menu-item .media img{height:100%;width:100%;object-fit:cover;}
+/* ---------------- Specialties ---------------- */
+.specialties .cards { display:grid; grid-template-columns:1fr; gap:18px; }
+.specialties .feature.card { padding:14px; background: linear-gradient(180deg,#fbfcfb,#f7f9f8); border-radius:12px; display:flex; gap:12px; align-items:flex-start; }
+.specialties .feature .media { width:160px; min-width:160px; height:110px; border-radius:10px; overflow:hidden; }
+.specialties .feature .body { flex:1 }
 
-/* ---------------- Specialties (two-col on medium) ---------------- */
-.specialties .cards{display:grid;grid-template-columns:1fr;gap:18px}
-.specialties .feature.card{display:flex;flex-direction:column;gap:10px;padding:14px;background:linear-gradient(180deg,#f3f6f7,#f7faf9);border-radius:12px;border:1px solid rgba(10,10,10,0.03)}
-.specialties .feature .media{height:var(--img-sm)}
+/* ---------------- Strengths (full-bleed safe) ---------------- */
+.strengths { position: relative; padding: 36px 0; overflow: visible; }
+.strengths::before { content: ""; position:absolute; inset:0; background: linear-gradient(180deg,var(--brand),var(--brand-2)); z-index:0; pointer-events:none; opacity:1; }
+.strengths .container { position:relative; z-index:1; }
+.strengths h2 { color: #042b2a; font-family: var(--serif); font-size:24px; }
+.strengths p { color: rgba(3,25,25,0.92); }
 
-/* ---------------- Strengths (full-bleed background safe) ---------------- */
-/* The background is drawn via ::before; content remains centered inside container */
-.strengths{position:relative;padding:36px 0;overflow:visible}
-.strengths::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--brand),var(--brand-2));z-index:0;pointer-events:none}
-.strengths .container{position:relative;z-index:1}
-.strengths h2{color:#042b2a;margin-bottom:8px}
-.strengths p{color:rgba(3,25,25,0.9);max-width:70ch}
-.strengths .four-col{display:grid;grid-template-columns:1fr;gap:16px;margin-top:12px}
-.strengths .card .media{height:var(--img-sm)}
+/* Strengths grid mobile-first */
+.strengths .four-col { display:grid; grid-template-columns:1fr; gap:14px; margin-top:12px; }
+.strengths .card .media { height: var(--img-sm); }
 
 /* ---------------- Menus page (left image + right list) ---------------- */
-/* Mobile: stack; Desktop: two-column layout */
-.menu-page .two-col{display:block}
-.menu-page .left .media{height:var(--img-lg);border-radius:12px}
-.menu-page .right .menu-offer{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(15,15,15,0.03);display:flex;gap:12px;align-items:flex-start}
-.menu-offer .num{min-width:46px;height:46px;background:var(--muted-card);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary)}
-.menu-offer .info{flex:1}
+/* Mobile stacked; desktop side-by-side implemented in breakpoints below */
+.menu-page .two-col { display:block; gap:18px; }
+.menu-page .left .media { height: var(--img-md); border-radius: 12px; }
+.menu-offer { display:flex; gap:12px; background:var(--card); border-radius:10px; padding:12px; border:1px solid rgba(15,15,15,0.03); }
+.menu-offer .num { min-width:46px; height:46px; background:var(--card-soft); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--charcoal); }
+.menu-offer .info { flex:1 }
 
-/* ---------------- Testimonials (kept functionally the same) ---------------- */
-.testimonials-grid{display:grid;grid-template-columns:1fr;gap:14px}
-.testimonial-card{padding:16px;border-radius:12px}
-
-/* ---------------- Footer ---------------- */
-.site-footer{background:#fafafa;padding:28px 0;border-top:1px solid rgba(0,0,0,0.04)}
+/* ---------------- Testimonials (kept modern) ---------------- */
+.testimonials { padding: 36px 0; }
+.testimonials-grid { display:grid; grid-template-columns:1fr; gap:14px; }
 
 /* ---------------- Responsive: tablet & desktop ---------------- */
-@media (min-width: var(--bp-sm)) {
-  h1{font-size:34px}
-  .hero .hero-text h1{font-size:34px}
-  .container{padding:24px}
-  .menu-item .media{height:var(--img-md)}
-  .specialties .feature .media{height:var(--img-md)}
-  .strengths .card .media{height:var(--img-md)}
+@media (min-width: 520px) {
+  .container { padding: 24px; }
+  .menu-item .media { height: var(--img-md); }
+  .specialties .feature .media { height: var(--img-md); min-width:180px; width:180px; }
+  .strengths .card .media { height: var(--img-md); }
 }
 
-@media (min-width: var(--bp-md)) {
-  /* Hero two-column (text left, image right) */
-  .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
-  .hero .media{height:var(--img-lg)}
-  /* Specialties: 2 columns */
-  .specialties .cards{grid-template-columns:repeat(2,1fr)}
-  /* Strengths: grid 2 columns -> 4 on large */
-  .strengths .four-col{grid-template-columns:repeat(2,1fr);gap:18px}
-  /* Menu grid: multi-column for raciones */
-  .menu-grid.two-col{grid-template-columns:repeat(2,1fr)}
-  .menu-grid.three-col{grid-template-columns:repeat(3,1fr)}
-  .menu-grid.four-col{grid-template-columns:repeat(4,1fr)}
-  /* Menus page: two-col layout (image left, offers right) */
-  .menu-page .two-col{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
-  .menu-page .right .menu-offer{grid-template-columns:56px 1fr;display:grid;align-items:start;gap:12px;padding:14px}
-  .menu-page .right .menu-offer .num{width:48px;height:48px;border-radius:8px}
+@media (min-width: 900px) {
+  /* Hero: text left, image right */
+  .hero { display:grid; grid-template-columns: 1fr 460px; gap:28px; align-items:center; }
+  .hero .media { height: var(--img-lg); border-radius: 14px; }
+
+  /* Raciones grid: 2 columns */
+  .menu-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+
+  /* Specialties: two columns grid with card-style */
+  .specialties .cards { grid-template-columns: repeat(2,1fr); }
+
+  /* Strengths: 2 columns */
+  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:18px; }
+
+  /* Menus page: left image + right column of offers with numbered box */
+  .menu-page .two-col { display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:start; }
+  .menu-page .right { display:flex; flex-direction:column; gap:14px; }
+  .menu-page .right .menu-offer { display:grid; grid-template-columns: 56px 1fr; gap:12px; align-items:start; padding:14px; }
+  .menu-page .right .menu-offer .num { width:48px; height:48px; border-radius:8px; }
 }
 
-@media (min-width: var(--bp-lg)) {
-  .container{padding:32px}
-  .hero .hero-text h1{font-size:44px}
-  .menu-item .media{height:var(--img-lg)}
-  .specialties .feature .media{height:var(--img-lg)}
-  .strengths .four-col{grid-template-columns:repeat(4,1fr);gap:20px}
+@media (min-width: 1200px) {
+  .menu-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+  .menu-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+  .strengths .four-col { grid-template-columns: repeat(4, 1fr); gap:20px; }
+  .container { padding: 32px; max-width: 1280px; }
+  .menu-item .media { height: var(--img-lg); }
 }
 
-/* ---------------- Accessibility & defensive rules ---------------- */
-/* ensure grid children can shrink */
+/* ---------------- Visual refinements & accessibility ---------------- */
+.card, .menu-item.card, .specialties .feature.card { transition: transform .18s var(--ease), box-shadow .18s var(--ease); }
+:focus { outline: 3px solid rgba(139,168,154,0.14); outline-offset: 3px; }
+
+/* Ensure grid children can shrink */
 .grid > *, .cards > *, .menu-grid > * { min-width: 0; }
-a:focus, button:focus { outline: 3px solid rgba(43,183,166,0.18); outline-offset: 3px; }
 
-/* ---------------- Minor helpers ---------------- */
-.text-muted{color:var(--muted)}
-.center{text-align:center}
-
-/* End of style.css - professional redesign */
+/* End of file */
