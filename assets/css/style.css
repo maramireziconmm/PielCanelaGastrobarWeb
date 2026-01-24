@@ -655,4 +655,56 @@ html, body {
     .strengths .four-col { grid-template-columns: 1fr; }
   }
 }
+
+/* ===== Especialidades: fondo full-bleed (sólo color), contenido igual ===== */
+
+.specialties {
+  /* hacer que el fondo visual ocupe todo el ancho de la ventana */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  box-sizing: border-box;
+
+  /* color / gradiente como el de strengths (ajusta si quieres otro) */
+  background: linear-gradient(180deg,#48d1c0 0%, #34c6b6 100%);
+  padding-top: 48px;    /* espacio superior dentro de la sección */
+  padding-bottom: 48px; /* espacio inferior dentro de la sección */
+}
+
+/* Mantener el contenido centrado y con el max-width habitual */
+.specialties > * {
+  max-width: var(--container-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+  box-sizing: border-box;
+}
+
+/* Asegurar que el título y las tarjetas sigan su estilo original pero con color de texto legible */
+.specialties h2,
+.specialties h3,
+.specialties p,
+.specialties .feature.card {
+  /* si necesitas ajustar color de texto dentro del fondo turquesa, cámbialo aquí */
+  color: #042b2a; /* color oscuro para buen contraste sobre turquesa */
+}
+
+/* Si hay tarjetas con fondo gris, se mantienen: suavizamos su contraste sobre turquesa */
+.specialties .feature.card {
+  background: #eef1f4;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Responsive: en pantallas pequeñas seguirán apilándose y el fondo full-bleed permanece */
+@media (max-width: 900px) {
+  .specialties {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .specialties > * { padding-left: 18px; padding-right: 18px; }
+}
 /* Fin de fichero */
