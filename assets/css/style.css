@@ -295,3 +295,102 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
   }
 }
 
+/* ===== Menús: imagen izquierda + ofertas numeradas a la derecha =====
+   Añadir al final de assets/css/style.css
+*/
+
+/* Asegurar que la sección two-col usa la altura/align apropiada */
+section.grid.two-col { align-items: start; }
+
+/* Reset contador en la columna derecha */
+section.grid.two-col .right { counter-reset: menuitems; }
+
+/* Estructura de cada oferta: cajetín (número) + contenido */
+.menu-offer {
+  counter-increment: menuitems;
+  display: grid;
+  grid-template-columns: 56px 1fr; /* cajetín + contenido */
+  gap: 14px;
+  align-items: start;
+  background: #f7f9fb;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(15,15,15,0.03);
+}
+
+/* cajetín numérico (izquierda) */
+.menu-offer::before {
+  content: counter(menuitems);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  background:#eef6f6;
+  color:var(--accent);
+  font-weight:700;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.04);
+  font-size:1rem;
+}
+
+/* Ajustes del título y texto dentro de la oferta */
+.menu-offer h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.menu-offer p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
+/* Imagen grande a la izquierda */
+.left.long-image,
+.long-image {
+  display:block;
+  width:100%;
+}
+.left.long-image img,
+.long-image img {
+  width: 100%;
+  height: 100%;
+  max-height: 720px; /* ajusta si quieres más/menos alto en desktop */
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(34,41,47,0.06);
+  display:block;
+}
+
+/* Si necesitas que la izquierda tenga una altura mínima para igualar la columna derecha */
+.left.long-image { min-height: 520px; }
+
+/* Alineado: asegurar que la columna right se comporta como columna vertical */
+section.grid.two-col .right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Responsive: en móvil apilar y ocultar cajetín numérico */
+@media (max-width: 900px) {
+  section.grid.two-col { grid-template-columns: 1fr !important; gap: 18px !important; }
+  .left.long-image, .long-image { width: 100%; max-height: 360px; }
+  .menu-offer {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+  .menu-offer::before { display: none; }
+  /* mejorar espaciado en móvil */
+  .right { width: 100%; }
+}
+
+/* Defensas: evitar overflow interno y asegurar que imágenes no queden tapadas */
+.menu-offer, .left.long-image, .long-image img, .right { box-sizing: border-box; max-width: 100%; }
+.left.long-image img { -webkit-user-drag: auto; user-select: auto; pointer-events: auto; }
