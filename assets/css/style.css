@@ -799,4 +799,104 @@ html, body {
   .strengths .four-col { grid-template-columns: 1fr; gap:14px; }
   .strengths .card img { height: 200px; }
 }
+
+/* ===== Fixes: spacing strengths, hero order on mobile, testimonials mobile ===== */
+
+/* 1) Margen extra en la sección "Lo Que Nos Hace Especiales" */
+.strengths {
+  padding-top: 56px !important;
+  padding-bottom: 56px !important;
+  box-sizing: border-box;
+}
+
+/* 2) Forzar que el hero haga stack y el orden (texto+botones primero, imagen después) SOLO EN MÓVIL */
+@media (max-width: 900px) {
+  /* Forzar una sola columna en .hero (no tocar escritorio) */
+  .hero.grid,
+  section.hero {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    align-items: start !important;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Orden: texto y sus acciones primero, imagen después */
+  .hero.grid .hero-text,
+  .hero.grid .hero-text * {
+    order: 1 !important;
+  }
+  .hero.grid .hero-actions {
+    order: 1 !important;
+    margin-top: 12px !important;
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+  .hero.grid .hero-image {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    min-width: 0 !important;
+  }
+  .hero.grid .hero-image img,
+  .hero .hero-image img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 420px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 12px !important;
+  }
+
+  /* Evitar overflow causado por elementos hijo en grid/flex */
+  .hero.grid, .hero.grid > * { min-width: 0 !important; box-sizing: border-box !important; }
+}
+
+/* 3) Ajustes específicos para la sección TESTIMONIOS en móvil */
+@media (max-width: 900px) {
+  /* Forzar una columna para las tarjetas de testimonio */
+  .testimonials.container .testimonials-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Las estadísticas deben apilarse en móvil */
+  .testimonials.container .testimonial-stats,
+  .testimonial-stats {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-top: 18px !important;
+  }
+
+  /* Asegurar que las tarjetas no se estiren y que el contenido haga wrap */
+  .testimonial-card, .testimonial-card * {
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    word-break: break-word !important;
+  }
+  .testimonial-card { padding: 18px !important; }
+}
+
+/* 4) Pequeños paddings laterales globales para evitar secciones pegadas al borde en móvil */
+@media (max-width: 900px) {
+  .container, .essence, .specialties, .strengths, .testimonials {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+
+/* 5) Regla defensiva para evitar (temporal) scroll horizontal por elementos con ancho accidental */
+html, body {
+  overflow-x: hidden !important;
+}
+
+/* 6) Asegurar que los componentes de tarjeta puedan encoger en grids */
+.cards, .grid, .footer-grid, .nav-inner, .menu-grid, .testimonials-grid {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
 /* Fin de fichero */
