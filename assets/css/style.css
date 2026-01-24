@@ -1,299 +1,191 @@
 /* ==========================================================
-   Piel Canela — style.css (revisión completa, responsive)
-   Objetivo: layout consistente, imágenes homogéneas, mobile-first
-   Fecha: 2026-01-24 (versión entregada)
-   Reemplaza completamente assets/css/style.css con este fichero
+   Piel Canela — style.css (rediseño profesional y moderno)
+   Reemplaza completamente assets/css/style.css con este fichero.
+   - Mobile-first, responsive, tipografía y espaciado refinados
+   - Imágenes homogéneas (ratio y recorte consistente)
+   - Tarjetas limpias y legibles para raciones, especialidades y menús
+   - Sección strengths (Puntos fuertes) full-bleed segura
+   - Mantiene la sección testimonios sin cambios estructurales
+   Fecha: 2026-01-24 (versión profesional)
    ========================================================== */
 
-/* ---------------- Variables y reset (mobile-first) ---------------- */
+/* ---------------- Variables y reset ---------------- */
 :root{
   --bg: #ffffff;
+  --surface: #ffffff;
   --muted: #6b7280;
-  --accent: #2b2f36;
-  --primary-cta: #2d3748;
-  --radius: 12px;
-  --card-bg: #f7f8f9;
-  --container-width: 1100px;
+  --muted-2: #98a0a6;
+  --accent: #22272b;
+  --primary: #1f2933;
+  --brand: #2bb7a6;        /* turquesa brand */
+  --brand-2: #31c2ae;      /* lighter turquesa */
+  --card: #f7f8f9;
+  --muted-card: #eef3f3;
+  --shadow: rgba(15,15,15,0.06);
+  --radius: 14px;
+  --container: 1120px;
 
-  /* strengths colors */
-  --strengths-start: #3fd6cb;
-  --strengths-end:  #34c6b6;
-  --text-on-strengths: #042b2a;
-
-  /* image heights (mobile-first, will scale on larger viewports) */
-  --img-small: 160px;
-  --img-medium: 200px;
-  --img-large: 260px;
+  /* image heights (mobile-first) */
+  --img-xs: 140px;
+  --img-sm: 180px;
+  --img-md: 220px;
+  --img-lg: 320px;
 
   --bp-sm: 520px;
   --bp-md: 900px;
-  --bp-lg: 1100px;
-  --bp-xl: 1400px;
+  --bp-lg: 1200px;
 
+  --ease: cubic-bezier(.2,.9,.2,1);
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body { background: var(--bg); color: var(--accent); line-height: 1.6; }
+/* Reset */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block;object-fit:cover}
+a{color:inherit}
 
-/* Evitar overflow horizontal por accidente */
-html, body { overflow-x: hidden; }
+/* Container */
+.container{max-width:var(--container);margin:0 auto;padding:20px;}
 
-/* Contenedor central */
-.container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 18px;
-  width: 100%;
-}
-
-/* ---------------- Utilities para imágenes homogéneas ---------------- */
-/* Uso recomendado: envolver la imagen en .media o dar clase .img-cover a la <img> */
+/* Utility: media wrapper with consistent ratio */
 .media {
-  width: 100%;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: #f3f5f7;
+  width:100%;
+  overflow:hidden;
+  background: linear-gradient(180deg,#f5f7f7,#eef3f3);
+  border-radius: calc(var(--radius) - 4px);
 }
+.media.aspect-16-9 { aspect-ratio: 16/9; }
+.media.aspect-4-3  { aspect-ratio: 4/3; }
+.media .img-cover, .img-cover { width:100%; height:100%; object-fit:cover; display:block; }
 
-/* Moderno: use aspect-ratio cuando sea posible para recorte consistente */
-.media.aspect-16-10 { aspect-ratio: 16 / 10; }
-.media.aspect-4-3  { aspect-ratio: 4 / 3; }
-.media.aspect-3-2  { aspect-ratio: 3 / 2; }
+/* Typography */
+h1,h2,h3,h4{color:var(--primary);margin:0}
+h1{font-size:28px;font-weight:800;line-height:1.02}
+h2.section-title{font-size:22px;font-weight:800;margin-bottom:8px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 12px;color:var(--muted)}
 
-/* Fallback: si no hay aspect-ratio (viejos navegadores), limitamos la altura */
-.media .img-cover,
-.img-cover {
-  width: 100%;
-  height: var(--img-medium);
-  object-fit: cover;
-  display: block;
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;cursor:pointer;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn.primary{background:var(--primary);color:white;box-shadow:0 6px 18px rgba(34,41,47,0.06)}
+.btn.ghost{background:transparent;border:1px solid #d6dbdb;color:var(--primary)}
+
+/* Header (light) */
+.site-nav{padding:14px 0;background:transparent;position:relative;z-index:50}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{height:56px;border-radius:50%;object-fit:contain}
+
+/* Mobile nav toggle */
+.nav-toggle{display:none;background:transparent;border:0;padding:8px}
+
+/* HERO - mobile first (stacked) */
+.hero{padding:8px 0}
+.hero .hero-text h1{font-size:28px;margin-bottom:10px}
+.hero .hero-text p{color:var(--muted-2);max-width:60ch}
+.hero .hero-actions{display:flex;gap:10px;margin-top:12px}
+
+/* Sections baseline */
+section{padding:28px 0}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border-radius:999px;font-weight:700;color:var(--muted);margin-bottom:10px}
+
+/* Card base */
+.card {
+  background:var(--surface);
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:1px solid rgba(15,15,15,0.03);
+  box-shadow: 0 8px 24px var(--shadow);
+  transition: transform .18s var(--ease),box-shadow .18s var(--ease);
 }
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,15,15,0.08)}
 
-/* On larger viewports we'll increase image heights via media queries */
+/* ---------------- RACIONES / menu-grid (cards) ---------------- */
+/* Mobile: single column list with media, title, desc, price */
+.menu-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.menu-item.card{display:flex;flex-direction:column}
+.menu-item .media{height:var(--img-sm);border-radius:calc(var(--radius) - 2px)}
+.menu-item .content{padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.menu-item .title{font-weight:800;color:var(--primary)}
+.menu-item .desc{color:var(--muted);font-size:0.95rem}
+.menu-item .price{font-weight:800;color:var(--primary);margin-top:6px}
 
-/* Asegurar que imágenes son interactivas y visibles */
-img { display:block; max-width:100%; height:auto; -webkit-user-drag:auto; user-select:auto; pointer-events:auto; }
+/* Make images slightly smaller to avoid giant crops */
+.menu-item .media img{height:100%;width:100%;object-fit:cover;}
 
-/* ---------------- Header / Nav ---------------- */
-.site-nav { position: relative; z-index: 60; padding: 12px 0; }
-.nav-inner { display:flex; gap:12px; align-items:center; justify-content:space-between; }
-.logo { height:56px; border-radius:50%; object-fit:contain; display:block; }
-.nav-links { list-style:none; display:flex; gap:20px; margin:0; padding:0; align-items:center; }
-.nav-links a { color:var(--muted); text-decoration:none; padding:8px 8px; border-radius:8px; font-weight:600; }
-.nav-links a:hover { color:var(--accent); background: rgba(45,55,72,0.03); }
+/* ---------------- Specialties (two-col on medium) ---------------- */
+.specialties .cards{display:grid;grid-template-columns:1fr;gap:18px}
+.specialties .feature.card{display:flex;flex-direction:column;gap:10px;padding:14px;background:linear-gradient(180deg,#f3f6f7,#f7faf9);border-radius:12px;border:1px solid rgba(10,10,10,0.03)}
+.specialties .feature .media{height:var(--img-sm)}
 
-/* Mobile toggle */
-.nav-toggle { display:none; background:transparent; border:0; padding:8px; border-radius:8px; cursor:pointer; }
+/* ---------------- Strengths (full-bleed background safe) ---------------- */
+/* The background is drawn via ::before; content remains centered inside container */
+.strengths{position:relative;padding:36px 0;overflow:visible}
+.strengths::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--brand),var(--brand-2));z-index:0;pointer-events:none}
+.strengths .container{position:relative;z-index:1}
+.strengths h2{color:#042b2a;margin-bottom:8px}
+.strengths p{color:rgba(3,25,25,0.9);max-width:70ch}
+.strengths .four-col{display:grid;grid-template-columns:1fr;gap:16px;margin-top:12px}
+.strengths .card .media{height:var(--img-sm)}
 
-/* ---------------- Hero ---------------- */
-/* Mobile-first: stacked by default */
-.hero {
-  display: block;
-  padding: 8px 0 18px;
-  gap: 18px;
-}
-.hero .hero-text h1 { font-size: 28px; margin: 0 0 12px; line-height: 1.03; }
-.hero .hero-text p { color: var(--muted); margin: 0 0 8px; }
-.hero-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+/* ---------------- Menus page (left image + right list) ---------------- */
+/* Mobile: stack; Desktop: two-column layout */
+.menu-page .two-col{display:block}
+.menu-page .left .media{height:var(--img-lg);border-radius:12px}
+.menu-page .right .menu-offer{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(15,15,15,0.03);display:flex;gap:12px;align-items:flex-start}
+.menu-offer .num{min-width:46px;height:46px;background:var(--muted-card);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary)}
+.menu-offer .info{flex:1}
 
-/* Hero image wrapper */
-.hero .media { margin-top: 12px; }
-
-/* ---------------- Buttons ---------------- */
-.btn { display:inline-block; padding:10px 14px; border-radius:8px; text-decoration:none; line-height:1; font-weight:600; }
-.btn.primary { background: var(--primary-cta); color: #fff; }
-.btn.outline { background: transparent; border: 1px solid var(--primary-cta); color: var(--primary-cta); }
-
-/* ---------------- Sections common ---------------- */
-section { padding: 28px 0; }
-.tag { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; background:#f1f3f5; color:var(--muted); font-weight:700; }
-h2.section-title { margin: 12px 0 18px; font-size: 28px; color:var(--accent); }
-
-/* reset for grid helper if missing */
-.grid { display: grid; gap: 18px; }
-
-/* ---------------- Nuestras Esencias (two-col in desktop) ---------------- */
-.essence {
-  padding-top: 36px;
-  padding-bottom: 36px;
-}
-.essence .two-col {
-  display:block;
-}
-.essence .two-col .media { border-radius: 12px; }
-
-/* ---------------- Specialties (cards with image) ---------------- */
-.specialties .cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-.specialties .feature.card {
-  background: var(--card-bg);
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.04);
-}
-.specialties .feature .media { margin-bottom:12px; }
-.specialties .feature h3 { margin: 0 0 8px; color: var(--accent); }
-.specialties .feature p { margin: 0; color: #45505a; line-height:1.6; }
-
-/* ---------------- Strengths (Puntos fuertes) - full-bleed background ---------------- */
-/* Use ::before for full-bleed background while keeping content centered */
-.strengths { position: relative; margin-top: 12px; margin-bottom: 12px; padding: 36px 0; overflow: visible; }
-.strengths::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, var(--strengths-start), var(--strengths-end));
-  z-index: 0;
-  pointer-events: none;
-}
-.strengths .container { position: relative; z-index: 1; }
-.strengths .four-col { display:grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
-.strengths .card { background: transparent; padding: 0; }
-.strengths .card .media { margin-bottom: 10px; }
-.strengths h2 { color: var(--text-on-strengths); font-size: 28px; margin: 6px 0 12px; }
-
-/* ---------------- Menús (left image + right stacked offers) ---------------- */
-section.grid.two-col {
-  display: block;
-  gap: 18px;
-}
-.menu-page .two-col {
-  display: block;
-}
-.menu-page .two-col .left,
-.menu-page .two-col .right { width: 100%; }
-
-/* menu-offer styles (mobile first) */
-.menu-offer {
-  counter-increment: menuitems;
-  display: block;
-  background: #f7f9fb;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 12px;
-}
-.menu-offer h3 { margin: 0 0 6px; }
-.menu-offer p { margin: 0; color: var(--muted); }
-
-/* ---------------- Raciones / Menu-grid (cards grid) ---------------- */
-.menu-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
-.menu-item.card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #eeeff1;
-  display: flex;
-  flex-direction: column;
-}
-.menu-item.card .media { border-radius: 0; } /* shape handled by card */
-.menu-item.card .media img, .menu-item.card img {
-  width: 100%;
-  height: var(--img-medium);
-  object-fit: cover;
-  display: block;
-}
-
-/* menu-item content */
-.menu-item.card h3 { margin: 12px 16px 6px; color: var(--accent); }
-.menu-item.card p, .menu-item.card .price { margin: 0 16px 16px; color: var(--muted); }
-
-/* ---------------- Testimonials & Stats (kept intact but responsive) ---------------- */
-.testimonials { padding: 36px 0; background: linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0)); }
-.testimonials-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px; }
-.testimonial-card { background:#fff; border-radius:10px; padding:16px; border:1px solid #e7e8ea; box-shadow: 0 6px 18px rgba(15,15,15,0.02); }
+/* ---------------- Testimonials (kept functionally the same) ---------------- */
+.testimonials-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.testimonial-card{padding:16px;border-radius:12px}
 
 /* ---------------- Footer ---------------- */
-.site-footer { background:#fbfbfb; padding: 28px 0; border-top: 1px solid #eee; margin-top: 20px; }
-.footer-grid { display: grid; gap: 12px; }
+.site-footer{background:#fafafa;padding:28px 0;border-top:1px solid rgba(0,0,0,0.04)}
 
-/* ---------------- Small screens (mobile) ---------------- */
-/* mobile styles already set (mobile-first) - refine breakpoints below */
+/* ---------------- Responsive: tablet & desktop ---------------- */
+@media (min-width: var(--bp-sm)) {
+  h1{font-size:34px}
+  .hero .hero-text h1{font-size:34px}
+  .container{padding:24px}
+  .menu-item .media{height:var(--img-md)}
+  .specialties .feature .media{height:var(--img-md)}
+  .strengths .card .media{height:var(--img-md)}
+}
 
-/* ---------------- Medium / Desktop breakpoints ---------------- */
 @media (min-width: var(--bp-md)) {
-  /* Hero becomes two-columns: text left, image right */
-  .hero {
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 28px;
-    align-items: center;
-  }
-  .hero .hero-text h1 { font-size: 40px; }
-
+  /* Hero two-column (text left, image right) */
+  .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+  .hero .media{height:var(--img-lg)}
   /* Specialties: 2 columns */
-  .specialties .cards { grid-template-columns: repeat(2, 1fr); gap: 18px; }
-
-  /* Strengths: 2 -> 4 columns progressively */
-  .strengths .four-col { grid-template-columns: repeat(2, 1fr); gap: 18px; }
-  @media (min-width: var(--bp-lg)) {
-    .strengths .four-col { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .strengths h2 { font-size: 36px; }
-  }
-
-  /* Menu-grid: raciones cards on desktop: 4 cols when enough width */
-  .menu-grid.four-col { grid-template-columns: repeat(4, 1fr); }
-  .menu-grid.three-col { grid-template-columns: repeat(3, 1fr); }
-  .menu-grid.two-col { grid-template-columns: repeat(2, 1fr); }
-
-  /* Raciones images bigger on desktop */
-  .menu-item.card img { height: var(--img-large); max-height: 320px; }
-
-  /* Menus page: split left image + right column
-     We expect HTML: <section class="grid two-col menu-page"> with .left and .right children */
-  section.grid.two-col.menu-page,
-  .menu-page .two-col {
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 28px;
-    align-items: start;
-  }
-  .menu-page .left.long-image img { max-height: 720px; height: auto; object-fit: cover; border-radius: 12px; }
-  /* Right column: keep stacking offers with counter */
-  .menu-page .right { display: flex; flex-direction: column; gap: 14px; }
-  /* On desktop convert menu-offer to two-column boxed layout with number */
-  .menu-page .right .menu-offer {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 16px;
-    align-items: start;
-    padding: 14px;
-  }
-  .menu-page .right .menu-offer::before {
-    content: counter(menuitems);
-    counter-increment: menuitems;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:48px;
-    height:48px;
-    background:#eef6f6;
-    color:var(--accent);
-    border-radius:6px;
-    font-weight:700;
-    border:1px solid rgba(0,0,0,0.04);
-  }
+  .specialties .cards{grid-template-columns:repeat(2,1fr)}
+  /* Strengths: grid 2 columns -> 4 on large */
+  .strengths .four-col{grid-template-columns:repeat(2,1fr);gap:18px}
+  /* Menu grid: multi-column for raciones */
+  .menu-grid.two-col{grid-template-columns:repeat(2,1fr)}
+  .menu-grid.three-col{grid-template-columns:repeat(3,1fr)}
+  .menu-grid.four-col{grid-template-columns:repeat(4,1fr)}
+  /* Menus page: two-col layout (image left, offers right) */
+  .menu-page .two-col{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
+  .menu-page .right .menu-offer{grid-template-columns:56px 1fr;display:grid;align-items:start;gap:12px;padding:14px}
+  .menu-page .right .menu-offer .num{width:48px;height:48px;border-radius:8px}
 }
 
-/* ---------------- Large desktop tweaks ---------------- */
-@media (min-width: var(--bp-xl)) {
-  .container { padding: 32px; }
-  .hero .hero-text h1 { font-size: 48px; }
-  .menu-page .two-col { grid-template-columns: 1fr 480px; }
-  .menu-item.card img { height: 260px; }
+@media (min-width: var(--bp-lg)) {
+  .container{padding:32px}
+  .hero .hero-text h1{font-size:44px}
+  .menu-item .media{height:var(--img-lg)}
+  .specialties .feature .media{height:var(--img-lg)}
+  .strengths .four-col{grid-template-columns:repeat(4,1fr);gap:20px}
 }
 
-/* ---------------- Defensive / helpers ---------------- */
-/* ensure flex/grid children can shrink */
-.row, .grid > * , .cards > *, .menu-grid > * { min-width: 0; }
+/* ---------------- Accessibility & defensive rules ---------------- */
+/* ensure grid children can shrink */
+.grid > *, .cards > *, .menu-grid > * { min-width: 0; }
+a:focus, button:focus { outline: 3px solid rgba(43,183,166,0.18); outline-offset: 3px; }
 
-/* subtle hover transitions */
-img, .card, .menu-item { transition: transform 180ms ease, box-shadow 180ms ease; }
-.menu-item:hover img, .card:hover img { transform: scale(1.02); }
+/* ---------------- Minor helpers ---------------- */
+.text-muted{color:var(--muted)}
+.center{text-align:center}
 
-/* End of style.css */
+/* End of style.css - professional redesign */
