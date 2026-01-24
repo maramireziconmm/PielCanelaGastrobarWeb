@@ -685,30 +685,118 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Asegurar contraste de texto dentro de strengths */
-.strengths h2 { color:#042b2a; font-size:40px; margin-bottom:12px; }
-.strengths p { color: rgba(3,25,25,0.9); max-width:80ch; }
+/* ===== STRENGTHS: match visual reference (full-bleed turquesa, large title, 4 cards) ===== */
 
-/* Mantener las cards tal y como están (imagen arriba, texto abajo) */
-.strengths .card { background: transparent; padding: 0; border-radius: 8px; color: #042b2a; }
-.strengths .card img { width:100%; height:140px; object-fit:cover; border-radius:8px; display:block; margin-bottom:12px; }
+/* Full-bleed background only for .strengths */
+.strengths {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  box-sizing: border-box;
+  background: linear-gradient(180deg,#3fd6cb 0%, #34c6b6 100%); /* ajuste de tono similar a la imagen */
+  padding-top: 64px;
+  padding-bottom: 64px;
+  overflow: hidden;
+}
 
-/* Responsive: en móvil devolvemos la sección al flujo normal con padding lateral */
-@media (max-width: 900px) {
+/* Centralizar y limitar contenido interno al container width */
+.strengths .container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: 48px;   /* espacio izquierdo grande similar a la imagen */
+  padding-right: 48px;
+  box-sizing: border-box;
+}
+
+/* Tag estilo (pequeña pastilla con icono) */
+.strengths .tag {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  border-radius:8px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(2,30,28,0.95);
+  font-weight:700;
+  margin-bottom:18px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow: none;
+}
+
+/* Título grande y espaciado */
+.strengths h2 {
+  font-size:44px;
+  line-height:1.04;
+  margin: 6px 0 18px 0;
+  color: #042b2a; /* oscuro para buen contraste */
+  font-weight:800;
+}
+
+/* Descripción más ancha y con leading cómodo */
+.strengths p {
+  color: rgba(3,25,25,0.95);
+  max-width: 78ch;
+  margin-bottom: 28px;
+  font-size: 1rem;
+  line-height:1.7;
+}
+
+/* Rejilla de 4 columnas: imagen arriba, texto abajo */
+.strengths .four-col {
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  align-items:start;
+  margin-top: 6px;
+}
+
+/* Cada card: imagen arriba (con bordes redondeados), luego título y texto */
+.strengths .card {
+  background: transparent;
+  padding: 0;
+  border-radius: 10px;
+  color: #042b2a;
+}
+.strengths .card img {
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:8px;
+  display:block;
+  margin-bottom:12px;
+  box-shadow: 0 8px 18px rgba(15,15,15,0.06);
+}
+.strengths .card h4 {
+  font-size: 18px;
+  margin: 8px 0 8px;
+  color: #042b2a;
+  font-weight:700;
+}
+.strengths .card p { color: rgba(3,25,25,0.9); line-height:1.5; }
+
+/* Borders subtle under cards like in example (optional) */
+.strengths .card { border: none; }
+
+/* Responsive: tablet -> 2 cols, mobile -> 1 col; maintain paddings */
+@media (max-width: 1100px) {
+  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:18px; }
+}
+@media (max-width: 600px) {
   .strengths {
     left: auto;
     right: auto;
     margin-left: 0;
     margin-right: 0;
     width: auto;
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-top: 36px;
+    padding-bottom: 36px;
   }
-  .strengths > .container { padding-left: 0; padding-right: 0; }
+  .strengths .container { padding-left: 20px; padding-right: 20px; }
   .strengths h2 { font-size:28px; }
-  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:12px; }
-  @media (max-width:520px) {
-    .strengths .four-col { grid-template-columns: 1fr; }
-  }
+  .strengths .four-col { grid-template-columns: 1fr; gap:14px; }
+  .strengths .card img { height: 200px; }
 }
 /* Fin de fichero */
