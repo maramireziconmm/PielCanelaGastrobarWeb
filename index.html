@@ -37,32 +37,49 @@
       </div>
     </section>
 
-    <section class="specialties">
-      <h2>Nuestras Especialidades</h2>
-      <div class="grid three-col cards">
-        <article class="feature card">
-          <div class="feature-icon">🍽️</div>
-          <h3>Raciones Caseras</h3>
-          <p>Croquetas de jamón, rabo de toro o langostinos, torreznos crujientes, pulpo a la gallega, huevos rotos, zamburiñas, lagrimitas de pollo, cachopo de ternera, ensalada de ventresca.</p>
-        </article>
+   <section class="specialties">
+  <div class="container specialties-inner" style="padding-top:24px; padding-bottom:24px;">
+    <h2>Nuestras Especialidades</h2>
 
-        <article class="feature card">
-          <div class="feature-icon">🍳</div>
-          <h3>Paellas y Arroces</h3>
-          <p>Arroz con bogavante, paella de marisco, arroz negro, paella valenciana, arroz a banda. Todos preparados por encargo.</p>
-        </article>
+    <div class="specialties-layout" style="display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start;">
+      <!-- Izquierda: tarjetas -->
+      <div class="cards-wrapper">
+        <div class="grid two-col cards">
+          <article class="feature card">
+            <div class="feature-icon">🍽️</div>
+            <h3>Raciones Caseras</h3>
+            <p>Croquetas de jamón, rabo de toro o langostinos, torreznos crujientes, pulpo a la gallega, huevos rotos, zamburiñas, lagrimitas de pollo, cachopo de ternera, ensalada de ventresca.</p>
+          </article>
 
-        <article class="feature card">
-          <div class="feature-icon">🍖</div>
-          <h3>Lechazo Asado</h3>
-          <p>Ofrecemos lechazo asado por encargo, jugoso y dorado, perfecto para celebraciones y grupos.</p>
-        </article>
+          <article class="feature card">
+            <div class="feature-icon">🍳</div>
+            <h3>Paellas y Arroces</h3>
+            <p>Arroz con bogavante, paella de marisco, arroz negro, paella valenciana, arroz a banda. Todos preparados por encargo.</p>
+          </article>
+
+        </div>
+
+        <!-- tarjeta grande debajo (ocupa 100% ancho del contenido izquierdo) -->
+        <div style="margin-top:18px">
+          <article class="feature card" style="background:#eef1f4;">
+            <div style="display:flex;align-items:center;gap:12px;padding:18px">
+              <div style="width:56px;height:56px;border-radius:50%;background:#3a3f49;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px">🍖</div>
+              <div>
+                <h3 style="margin:0 0 6px">Lechazo Asado</h3>
+                <p style="margin:0;color:#4f5963">Ofrecemos lechazo asado por encargo, jugoso y dorado, perfecto para celebraciones y grupos.</p>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
 
-      <div class="big-image" style="margin-top:18px">
-        <img alt="Arroz" src="assets/images/14-Zamburiñas.jpg" />
+      <!-- Derecha: imagen grande del arroz -->
+      <div class="big-image" style="display:block">
+        <img src="assets/images/Arroz con bogavante.jpg" alt="Arroz con bogavante" style="width:100%;height:auto;object-fit:cover;border-radius:12px;box-shadow:0 8px 24px rgba(34,41,47,0.06)" />
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <section class="strengths">
       <div class="tag"><span class="icon">📒</span> Puntos fuertes</div>
