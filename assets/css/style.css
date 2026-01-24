@@ -375,3 +375,99 @@ html, body { overflow-x: hidden !important; }
 /* Optional: to scope only to raciones page, if you added .page-raciones to <body>,
    wrap the rules above with .page-raciones e.g.
    .page-raciones .menu-grid { ... } */
+
+
+/* ===== Menus: imagen más pequeña a la izquierda + ofertas en cajas =====
+   Scope: .menu-page (añade la clase en el <section> para limitar cambios)
+*/
+
+/* Desktop/Tablet: layout dos columnas con la imagen izquierda más pequeña */
+.menu-page .two-col {
+  display: grid;
+  grid-template-columns: 420px 1fr; /* 420px para la imagen, resto para las cajas */
+  gap: 28px;
+  align-items: start;
+}
+
+/* Centrar la imagen y limitar su altura para que no domine la página */
+.menu-page .left,
+.menu-page .left .media {
+  display: block;
+  width: 100%;
+}
+.menu-page .left .media {
+  max-height: 420px;         /* TOCA: reduce/úbica el alto que prefieras */
+  height: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0;
+  box-shadow: 0 12px 30px rgba(15,15,15,0.06);
+}
+.menu-page .left .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Ofertas: convertir a cajas con número en cajetín */
+.menu-page .right .menu-offer {
+  display: grid;
+  grid-template-columns: 56px 1fr; /* cajetín + contenido */
+  gap: 14px;
+  align-items: start;
+  background: #fff;
+  border: 1px solid rgba(15,15,15,0.04);
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(15,15,15,0.06);
+}
+
+/* Cajetín numérico (izquierda) */
+.menu-page .right .menu-offer .num {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  border-radius:8px;
+  background: linear-gradient(180deg,#f3f6f5,#eef3f2);
+  color:var(--accent);
+  font-weight:800;
+  font-size:0.95rem;
+  border:1px solid rgba(0,0,0,0.03);
+}
+
+/* Contenido de la oferta */
+.menu-page .right .menu-offer .info h3 {
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.menu-page .right .menu-offer .info p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Separación entre cajas */
+.menu-page .right { display:flex; flex-direction:column; gap:14px; }
+
+/* Responsive: en móvil se apila la imagen encima y las cajas debajo */
+@media (max-width: 899px) {
+  .menu-page .two-col { display:block; gap:18px; }
+  .menu-page .left .media { max-height: 320px; }
+  .menu-page .right .menu-offer { grid-template-columns: 1fr; }
+  .menu-page .right .menu-offer .num { display:none; } /* opcional: ocultar el número en móvil para legibilidad */
+  .menu-page .right { gap:12px; }
+}
+
+/* Defensa: evitar overflow horizontal */
+.menu-page .left .media img, .menu-page .right .menu-offer img {
+  max-width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+}
