@@ -294,3 +294,84 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
     padding-right: 18px !important;
   }
 }
+
+/* ===== PARCHE: Imágenes homogéneas en RACIONES (menu-grid) ===== */
+/* Aplicable a toda la web; para limitar solo a la página raciones añade .page-raciones antes de los selectores */
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: start;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Asegurar que cada tarjeta se comporte como card flexible */
+.menu-grid .menu-item.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg, #fff);
+  border-radius: calc(var(--radius,12px));
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 8px 18px rgba(15,15,15,0.04);
+  width: 100%;
+}
+
+/* Media wrapper: forzar ratio y recorte homogéneo */
+.menu-grid .menu-item .media {
+  width: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--radius,12px));
+  /* prefer aspect-ratio when supported */
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(180deg,#f7f8f8,#f3f5f5);
+}
+
+/* Imagen dentro del media: siempre cover y ocupar contenedor exacto */
+.menu-grid .menu-item .media img,
+.menu-grid .menu-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Texto y precio en la tarjeta */
+.menu-grid .menu-item .content {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.menu-grid .menu-item .title { font-weight:700; color: var(--accent); font-family: var(--serif, inherit); }
+.menu-grid .menu-item .desc { color: var(--muted); font-size: 0.95rem; }
+.menu-grid .menu-item .price { margin-top: auto; font-weight:800; color: var(--accent); }
+
+/* Breakpoints: ajustar altura/ratio según tamaño de pantalla */
+@media (max-width: 520px) {
+  .menu-grid { gap: 14px; }
+  .menu-grid .menu-item .media { aspect-ratio: 3 / 2; } /* más alto en móvil */
+}
+@media (min-width: 521px) and (max-width: 899px) {
+  .menu-grid .menu-item .media { aspect-ratio: 16 / 9; }
+}
+@media (min-width: 900px) {
+  .menu-grid .menu-item .media { aspect-ratio: 16 / 10; }
+  .menu-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1200px) {
+  .menu-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+  .menu-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+  .menu-grid .menu-item .media { aspect-ratio: 3 / 2; } /* desktop: más presencia */
+}
+
+/* Defensive: evitar scroll horizontal por imágenes u elementos fuera de contenedor */
+html, body { overflow-x: hidden !important; }
+.menu-grid, .menu-grid * { box-sizing: border-box; min-width: 0; }
+
+/* Optional: to scope only to raciones page, if you added .page-raciones to <body>,
+   wrap the rules above with .page-raciones e.g.
+   .page-raciones .menu-grid { ... } */
