@@ -394,3 +394,97 @@ section.grid.two-col .right {
 /* Defensas: evitar overflow interno y asegurar que imágenes no queden tapadas */
 .menu-offer, .left.long-image, .long-image img, .right { box-sizing: border-box; max-width: 100%; }
 .left.long-image img { -webkit-user-drag: auto; user-select: auto; pointer-events: auto; }
+
+
+/* ===== PATCH: arreglos de layout y raciones (desktop) ===== */
+
+/* Restaurar comportamiento base .grid y helpers (evita que .grid desaparezca) */
+.grid {
+  display: grid;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+/* Dos columnas 'two-col' (útil en menus, hero, etc.) */
+.grid.two-col {
+  grid-template-columns: 1fr 420px;
+  align-items: start;
+  gap: 24px;
+}
+
+/* Asegurar que los menu-grid aplican el grid correcto en escritorio */
+.menu-grid.four-col,
+.menu-grid.three-col,
+.menu-grid.two-col {
+  display: grid !important;
+  gap: 18px;
+}
+
+.menu-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+.menu-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+.menu-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+
+/* ===== RACIONES: imágenes y tarjetas (se aplica sobre reglas globales) ===== */
+
+/* Forzar que cada tarjeta de raciones tenga un ancho controlado y no expanda la imagen */
+.menu-item.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #eeeff1;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Imágenes de las tarjetas: tamaño fijo en altura y object-fit para recorte uniforme */
+.menu-item.card img {
+  width: 100% !important;
+  height: 180px !important;           /* altura consistente en desktop */
+  max-height: 220px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0; /* la tarjeta tiene border-radius global, la img ya está contenida */
+}
+
+/* Texto / precio dentro de la tarjeta */
+.menu-item.card h3,
+.menu-item.card p,
+.menu-item.card .price {
+  padding: 12px 16px;
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Asegurar que .menu-grid hijo no sea forzado a bloquear display por otras reglas */
+.menu-grid { box-sizing: border-box; width: 100%; }
+
+/* ===== Menus (columna izquierda imagen / derecha tarjetas) ajustes finos ===== */
+/* (refuerza regla cuando exists section.grid.two-col con .left .right) */
+section.grid.two-col { display: grid !important; grid-template-columns: 1fr 420px !important; gap: 24px !important; align-items: start !important; }
+
+/* Evitar que reglas globales que usen height:100% afecten a estas imágenes específicas */
+.left.long-image img,
+.long-image img,
+.menu-item.card img,
+.strengths .card img {
+  height: auto !important;
+  max-height: 720px !important;
+  object-fit: cover !important;
+}
+
+/* Para desktop amplio (opcionales): asegurar que la left image no crezca demasiado
+   y deje espacio para la columna derecha */
+@media (min-width: 1200px) {
+  section.grid.two-col { grid-template-columns: 1fr 460px !important; }
+  .left.long-image { min-height: 520px; }
+}
+
+/* Mantener las reglas responsive ya definidas (mp <= 900) inalteradas */
+/* (no añadimos !important en los media queries ya existentes) */
+
+/* Defensa final: evitar overflow horizontal por elementos puntuales */
+html, body, .container, main { overflow-x: hidden; }
