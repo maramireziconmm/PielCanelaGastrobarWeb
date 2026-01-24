@@ -318,6 +318,157 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
 /* Fallback: si la imagen no existe, fondo suave */
 .menu-item img[alt], .card img[alt] { background: linear-gradient(180deg,#f8fafb,#f3f5f7); }
 
+/* ===== RESTAURACIÓN: Nuestra Esencia / Especialidades / Lo Que Nos Hace Especiales ===== */
 
+/* ---- NUESTRA ESENCIA / ¿POR QUÉ ---- */
+.essence {
+  padding: 48px 0;
+  position: relative;
+  background: linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0));
+}
+
+.essence .tag {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:#f1f3f5;
+  color:var(--muted);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:700;
+  margin-bottom:18px;
+  font-size:0.92rem;
+}
+
+/* fuerza corazón antes si se quiere un símbolo separado */
+.essence .tag .icon { font-size:16px; display:inline-block; }
+
+/* título grande */
+.essence h2 {
+  font-size:40px;
+  margin:6px 0 22px;
+  color:var(--accent);
+  line-height:1.05;
+}
+
+/* Dos columnas: texto izquierda / imagen derecha en escritorio */
+.essence .two-col {
+  display:grid;
+  grid-template-columns: 1fr 480px;
+  gap:36px;
+  align-items:center;
+}
+
+/* texto y párrafo */
+.essence .two-col > div:first-child p {
+  color:var(--muted);
+  font-size:1.02rem;
+  line-height:1.7;
+  max-width: 70ch;
+}
+
+/* imagen card a la derecha */
+.essence .image-card {
+  background:transparent;
+  padding:0;
+  border-radius:12px;
+}
+.essence .image-card img {
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:12px;
+  object-fit:cover;
+  box-shadow: 0 8px 28px rgba(34,41,47,0.04);
+}
+
+/* ---- Nuestras Especialidades (tarjetas grises) ---- */
+.specialties {
+  padding: 44px 0;
+}
+.specialties h2 {
+  font-size:36px;
+  margin-bottom:18px;
+  color:var(--accent);
+}
+
+/* grid: dos columnas y el tercer item ocupa ambas columnas */
+.specialties .cards {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+}
+
+/* tarjeta gris */
+.specialties .feature.card {
+  background:#eef1f4;
+  padding:22px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.04);
+  color:var(--accent);
+  min-height: 160px;
+}
+
+/* icono circular arriba */
+.specialties .feature .feature-icon {
+  width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:#3a3f49;color:#fff;margin-bottom:12px;
+}
+
+/* titulos y texto */
+.specialties .feature h3 { margin:6px 0 10px; font-size:20px; }
+.specialties .feature p { color: #4f5963; line-height:1.6; }
+
+/* hacer que la tercera tarjeta ocupe ambas columnas (si hay 3 tarjetas) */
+.specialties .cards > .feature.card:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+/* ---- Lo Que Nos Hace Especiales (fondo turquesa) ---- */
+.strengths {
+  padding: 48px 0;
+  background: linear-gradient(180deg, #48d1c0 0%, #34c6b6 100%);
+  color: #05323a;
+}
+.strengths .tag { background: rgba(255,255,255,0.08); color: #052e2d; border-radius:8px; padding:8px 12px; display:inline-flex; gap:8px; align-items:center; margin-bottom:18px; }
+.strengths h2 { font-size:40px; margin-bottom:14px; color:#042b2a; }
+.strengths p { color: rgba(3,25,25,0.9); max-width: 80ch; margin-bottom:22px; }
+
+/* grid de 4 columnas con imagen arriba y texto abajo */
+.strengths .four-col {
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:20px;
+  align-items:start;
+}
+.strengths .card {
+  background:transparent;
+  padding:0;
+  border-radius:8px;
+  color:#042b2a;
+}
+.strengths .card img { width:100%; height:140px; object-fit:cover; border-radius:8px; display:block; margin-bottom:12px; }
+.strengths .card h4 { font-size:18px; margin:6px 0 6px; color:#042b2a; }
+.strengths .card p { color: rgba(3,25,25,0.9); line-height:1.5; }
+
+/* ---- RESPONSIVE: sólo móviles (no tocar escritorio) ---- */
+@media (max-width: 900px) {
+  /* essence: stack */
+  .essence .two-col { grid-template-columns: 1fr; gap:18px; }
+  .essence .image-card { order: 2; }
+  .essence .hero-text, .essence .two-col > div:first-child { order: 1; }
+
+  /* specialties: pasar a 1 columna */
+  .specialties .cards { grid-template-columns: 1fr; }
+  .specialties .cards > .feature.card:nth-child(3) { grid-column: auto; }
+
+  /* strengths: pasar a 2 columnas en tablet y 1 en móvil */
+  .strengths .four-col { grid-template-columns: repeat(2,1fr); }
+  @media (max-width:520px) {
+    .strengths .four-col { grid-template-columns: 1fr; }
+  }
+
+  /* suavizar tamaños del título en móvil */
+  .essence h2, .strengths h2 { font-size:28px; }
+}
 
 /* Fin de fichero */
