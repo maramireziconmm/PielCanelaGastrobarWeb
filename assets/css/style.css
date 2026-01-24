@@ -1,66 +1,99 @@
-/* --- Estilos CSS Modernos para Restaurante --- */
+/* ===== Menús: layout imagen izquierda / ofertas numeradas a la derecha =====
+   Añadir al final de assets/css/style.css
+*/
 
-:root {
-  --primary-color: #2c3e50; /* Azul oscuro elegante */
-  --accent-color: #d4a76a; /* Dorado/Beige para acentos */
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Roboto', sans-serif;
-}
+/* Contador para numerar automáticamente los .menu-offer dentro de .right */
+.right { counter-reset: menuitems; }
 
-body {
-  font-family: var(--font-body);
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* --- Tipografía y Títulos --- */
-h1, h2, h3 {
-  font-family: var(--font-heading);
-  color: var(--primary-color);
-  font-weight: 700;
-}
-
-/* --- Menú/Galería (CSS Grid) --- */
-.menu-grid {
+/* Contenedor principal de la oferta: cajetín con número + contenido */
+.menu-offer {
+  counter-increment: menuitems;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+  grid-template-columns: 56px 1fr; /* cajetín + contenido */
+  gap: 14px;
+  align-items: start;
+  background: #f7f9fb;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(15,15,15,0.03);
 }
 
-.menu-item {
-  border: 1px solid #eee;
-  padding: 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* cajetín numérico (izquierda) */
+.menu-offer::before {
+  content: counter(menuitems);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  background: #eef6f6;
+  color: var(--accent);
+  font-weight:700;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.04);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.02);
+  font-size:1rem;
 }
 
-.menu-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+/* Título y texto */
+.menu-offer h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+.menu-offer p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
-/* --- Botones --- */
-.btn-book {
-  background-color: var(--accent-color);
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background 0.3s;
+/* Ajustes para la imagen grande en la izquierda */
+.long-image {
+  display:block;
+  align-self: start;
+}
+.long-image img {
+  width: 100%;
+  height: 100%;
+  max-height: 720px; /* tope razonable en desktop */
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 8px 24px rgba(34,41,47,0.06);
 }
 
-.btn-book:hover {
-  background-color: #b8864b;
+/* Si quieres que la columna izquierda sea más alta, definimos un min-height
+   para asegurar aspecto similar al ejemplo */
+.left.long-image { min-height: 520px; }
+
+/* Ajustes visuales finos: alinear la lista de cards a la misma altura de la imagen */
+section.grid.two-col[style*="align-items:start"] .right {
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
 }
 
-/* --- Responsive --- */
-@media (max-width: 768px) {
-  .menu-grid {
+/* Responsive: en móvil apilar la imagen y las tarjetas; ocultar el cajetín numérico */
+@media (max-width: 900px) {
+  section.grid.two-col { grid-template-columns: 1fr !important; gap: 18px !important; }
+
+  .long-image img { max-height: 360px; height: auto; }
+
+  /* .menu-offer pasa a columna única (sin cajetín) */
+  .menu-offer {
     grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 14px;
   }
+  .menu-offer::before { display: none; }
+
+  /* espaciar mejor en móvil */
+  .right { width: 100%; }
+  .left.long-image, .long-image { width: 100%; }
 }
+
+/* Pequenos refinamientos: asegurar que no haya overflow horizontal */
+.right, .left.long-image, .menu-offer, .long-image img { box-sizing: border-box; max-width: 100%; }
