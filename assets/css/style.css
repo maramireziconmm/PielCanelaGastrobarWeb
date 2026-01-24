@@ -254,17 +254,57 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
   padding-right: 30px;
 }
 
-/* ensure images are visible and interactive */
-.strengths .card img,
-.strengths img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  pointer-events: auto;
+/* ===== Ajuste: imágenes iguales en .strengths (cards) ===== */
+
+/* Asegurar que cada card tenga estructura vertical consistente */
+.strengths .card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-start;
 }
 
-/* keep grid layout and responsive behavior as before */
-.strengths .four-col { display:grid; grid-template-columns: repeat(4,1fr); gap:20px; }
-@media (max-width: 1100px) { .strengths .four-col { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 520px) { .strengths .four-col { grid-template-columns: 1fr; } }
+/* Forzar altura consistente para miniaturas en desktop */
+.strengths .card img {
+  width: 100%;
+  height: 200px;              /* tamaño principal: ajusta a 180/220 si prefieres */
+  object-fit: cover;          /* recorta manteniendo proporción */
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 8px 18px rgba(15,15,15,0.06);
+}
+
+/* Asegurar que título y párrafo están abajo y con margen uniforme */
+.strengths .card h4 {
+  margin: 8px 0 6px;
+  font-size: 18px;
+  color: var(--text-on-strengths, #042b2a);
+  font-weight: 700;
+}
+.strengths .card p {
+  margin: 0;
+  color: rgba(3,25,25,0.9);
+  line-height: 1.5;
+}
+
+/* Si alguna card contiene imagen muy alta por defecto, esta regla evita overflow */
+.strengths .card > img { max-width: 100%; height: 200px; }
+
+/* Tablet: reducir altura para que todo entre mejor */
+@media (max-width: 1100px) {
+  .strengths .card img { height: 160px; }
+}
+
+/* Móvil: apilar y alturas más pequeñas */
+@media (max-width: 900px) {
+  .strengths .card img { height: 200px; } /* puede quedar igual que tablet */
+  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:16px; }
+}
+@media (max-width: 520px) {
+  .strengths .card img { height: 180px; }
+  .strengths .four-col { grid-template-columns: 1fr; }
+}
+
+/* Asegurar que no exista overlay que oculte imágenes */
+.strengths::before { pointer-events: none; } 
+.strengths .card img { pointer-events: auto; opacity: 1; }
