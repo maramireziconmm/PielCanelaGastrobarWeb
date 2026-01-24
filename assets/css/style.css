@@ -389,4 +389,12 @@ img {
 @media (max-width: 420px) {
   .container { padding-left: 12px; padding-right: 12px; }
 }
+
+/* Especialidades: asegurar que la imagen lateral no empuje fuera del viewport */
+.specialties .big-image,
+.hero-image,
+.long-image { overflow: hidden; }
+.specialties .big-image img,
+.hero-image img,
+.long-image img { max-width: 100%; width: auto; height: auto; display:block; object-fit: cover; }
 /* Fin de fichero */
