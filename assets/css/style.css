@@ -318,41 +318,6 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
 /* Fallback: si la imagen no existe, fondo suave */
 .menu-item img[alt], .card img[alt] { background: linear-gradient(180deg,#f8fafb,#f3f5f7); }
 
-/* ===== MOBILE: hero (texto arriba, imagen abajo) =====
-   Aplica solo en pantallas pequeñas y no modifica escritorio.
-*/
-@media (max-width: 900px) {
-  /* Forzar que el hero haga stack en una columna */
-  .hero {
-    grid-template-columns: 1fr !important;
-    gap: 18px !important;
-    align-items: start;
-  }
 
-  /* Permitir que los hijos del grid se reduzcan (evita overflow) */
-  .hero, .hero > * {
-    min-width: 0;
-    box-sizing: border-box;
-  }
-
-  /* Orden: texto (y botones) primero, imagen después */
-  .hero .hero-text { order: 1; }
-  .hero .hero-actions { order: 1; } /* los botones siguen con el texto */
-  .hero .hero-image { order: 2; width: 100% !important; max-width: 100% !important; margin: 0 auto !important; }
-
-  /* Asegurar que la imagen no empuje el layout */
-  .hero .hero-image img {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 420px !important;
-    object-fit: cover !important;
-    display: block !important;
-    border-radius: 12px !important;
-  }
-
-  /* Ajustes visuales menores para mantener espaciado correcto */
-  .hero .hero-text { padding-bottom: 6px; }
-  .hero .hero-actions { margin-top: 12px; display:flex; gap:12px; flex-wrap:wrap; }
-}
 
 /* Fin de fichero */
