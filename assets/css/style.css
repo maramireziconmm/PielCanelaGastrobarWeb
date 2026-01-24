@@ -5,6 +5,13 @@
 
 :root{
   --bg:#ffffff;
+  --muted:#6b7280;/* Piel Canela — estilos principales (actualizado)
+   Incluye: menú móvil funcional, tarjetas raciones móviles y testimonios/estadísticas visuales.
+   Fecha: 2026-01-23
+*/
+
+:root{
+  --bg:#ffffff;
   --muted:#6b7280;
   --accent:#2b2f36;
   --primary:#2e3a47;
@@ -12,7 +19,7 @@
   --radius:12px;
   --card-bg:#f7f8f9;
   --container-width:1100px;
-  --quote-color:#e9e9ea;
+  --quote-color:#e9eea;
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
@@ -243,6 +250,32 @@ p { margin:0 0 16px; color:var(--muted); }
 .site-footer { background:#fbfbfb; padding:28px 0; margin-top:40px; border-top:1px solid #eee; }
 .footer-grid { display:grid; grid-template-columns:1fr 1fr auto; gap:16px; align-items:start; }
 
+/* Fix: ensure no horizontal overflow on small screens */
+html, body { overflow-x: hidden; }
+.container { box-sizing: border-box; width:100%; }
+
+/* Footer responsive improvements */
+@media (max-width: 720px) {
+  .footer-grid { grid-template-columns: 1fr; gap:12px; }
+  .site-footer .footer-grid > div { padding: 8px 0; }
+  .site-footer { padding:20px 12px; }
+  .footer-grid .footer-nav { text-align:left; }
+}
+
+/* Prevent hero / long images from causing horizontal scroll */
+.hero { overflow: hidden; }
+.hero-image img { max-width: 100%; height: auto; display:block; }
+
+/* Make sure any wide elements inside cards wrap and do not force width */
+.testimonial-card, .card, .menu-item.card { word-wrap: break-word; overflow-wrap: break-word; }
+
+/* Ensure nav and inner containers respect box-sizing */
+.nav-inner, .nav-top { box-sizing: border-box; }
+
+/* Defensive: force testimonial grids when overwritten */
+.testimonials-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap:20px !important; }
+.testimonial-stats { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap:28px !important; }
+
 /* Responsivo: móvil */
 @media (max-width:900px) {
   .container{padding:18px}
@@ -292,109 +325,4 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
 /* Fallback: si la imagen no existe, fondo suave */
 .menu-item img[alt], .card img[alt] { background: linear-gradient(180deg,#f8fafb,#f3f5f7); }
 
-/* ===== Fix móvil: footer y overflow ===== */
-
-/* Evitar scroll horizontal causado por elementos anchos */
-html, body {
-  overflow-x: hidden; /* defensivo: evita scroll horizontal por poco */
-}
-
-/* Asegurar que el contenedor no desborde */
-.container {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: var(--container-width);
-  padding-left: 16px;
-  padding-right: 16px;
-  margin: 0 auto;
-}
-
-/* Hero: evitar que su imagen cause overflow */
-.hero {
-  overflow: hidden;
-  position: relative;
-}
-
-/* Hero imagen: forzar ajuste responsivo seguro */
-.hero-image img {
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-/* Forzar que cualquier imagen no expanda la anchura */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  box-sizing: border-box;
-}
-
-/* Evitar que cajas internas con padding/margins creen overflow */
-.row, .grid, .nav-inner, .nav-top, .site-nav, .footer-grid {
-  box-sizing: border-box;
-}
-
-/* Footer: disposición responsiva y legible en móvil */
-.site-footer {
-  background:#fbfbfb;
-  padding: 28px 12px;
-  margin-top: 40px;
-  border-top: 1px solid #eee;
-  overflow: hidden;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 16px;
-  align-items: start;
-}
-
-/* Links y texto en footer: que hagan wrap y no salgan en una sola línea */
-.site-footer a, .site-footer p {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-  hyphens: auto;
-}
-
-/* Ajuste específico para móvil: apilar todo y centrar si quieres */
-@media (max-width: 720px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .site-footer .footer-grid > div {
-    padding: 6px 0;
-  }
-  .site-footer { padding: 18px 12px; }
-  .footer-grid .footer-nav { text-align: left; }
-}
-
-/* Si tienes elementos con min-width problemáticos: forzarlos a adaptarse */
-.testimonial-card, .card, .menu-item.card, .stat-box {
-  min-width: 0; /* permite que los hijos en grid/flex quepan en contenedor */
-}
-
-/* Reglas defensivas: forzar grids a no desbordar */
-.testimonials-grid, .menu-grid.four-col, .menu-grid.three-col, .menu-grid.two-col {
-  min-width: 0;
-}
-
-/* Si algún elemento con padding grande empuja la anchura, recorta márgenes laterales en móvil */
-@media (max-width: 420px) {
-  .container { padding-left: 12px; padding-right: 12px; }
-}
-
-/* Especialidades: asegurar que la imagen lateral no empuje fuera del viewport */
-.specialties .big-image,
-.hero-image,
-.long-image { overflow: hidden; }
-.specialties .big-image img,
-.hero-image img,
-.long-image img { max-width: 100%; width: auto; height: auto; display:block; object-fit: cover; }
 /* Fin de fichero */
