@@ -1,196 +1,66 @@
-/* Piel Canela — style.css final (mobile-first, responsive, profesional)
-   Sustituye completamente assets/css/style.css por este fichero.
-   Fecha: 2026-01-24
-   Nota: Incluye estilos para header/menu (desktop + mobile), hero,
-   especialidades, raciones, menus, puntos fuertes, testimonios.
-*/
+/* --- Estilos CSS Modernos para Restaurante --- */
 
-/* ---------- VARIABLES y RESET ---------- */
-:root{
-  --brand-salvia: #8aa89a;
-  --brand-accent: #31c2ae;
-  --charcoal: #1f2933;
-  --sand: #eae0d6;
-  --muted: #6b7280;
-  --bg: #ffffff;
-  --card: #ffffff;
-  --card-soft: #f4f6f5;
-  --shadow: rgba(15,15,15,0.06);
-  --radius: 12px;
-
-  --img-xs: 140px;
-  --img-sm: 180px;
-  --img-md: 220px;
-  --img-lg: 320px;
-
-  --container: 1120px;
-  --bp-sm: 520px;
-  --bp-md: 900px;
-  --bp-lg: 1200px;
-
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+:root {
+  --primary-color: #2c3e50; /* Azul oscuro elegante */
+  --accent-color: #d4a76a; /* Dorado/Beige para acentos */
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Roboto', sans-serif;
 }
 
-/* reset */
-* { box-sizing: border-box; }
-html,body { height:100%; margin:0; background:var(--bg); color:var(--charcoal); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-a { color:inherit; text-decoration:none; }
-
-/* contenedor central */
-.container { max-width: var(--container); margin:0 auto; padding:18px; width:100%; }
-
-/* helper media wrapper para imágenes homogéneas */
-.media { width:100%; overflow:hidden; border-radius: calc(var(--radius) - 2px); background: linear-gradient(180deg,#f8faf9,#f3f5f5); }
-.media.aspect-16-9 { aspect-ratio: 16/9; }
-.media.aspect-4-3 { aspect-ratio: 4/3; }
-.img-cover { width:100%; height:100%; object-fit:cover; display:block; }
-
-/* tipografías (usar Google Fonts en head: Playfair Display + Inter) */
-:root { --serif: "Playfair Display", Georgia, serif; --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-
-/* typographic scale */
-h1,h2,h3,h4 { margin:0; font-family:var(--serif); color:var(--charcoal); }
-h1 { font-size:28px; font-weight:700; line-height:1.04; }
-h2.section-title { font-size:20px; font-weight:700; margin-bottom:8px; }
-h3{ font-size:18px; font-weight:700; }
-p { margin:0 0 12px; color:var(--muted); font-family:var(--sans); }
-
-/* botones */
-.btn { display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; transition: transform .16s ease, box-shadow .16s ease; }
-.btn--primary { background:var(--brand-salvia); color:white; box-shadow:0 8px 24px var(--shadow); border: none; }
-.btn--ghost { background:transparent; border:1px solid rgba(31,41,51,0.06); color:var(--charcoal); }
-
-/* ---------- HEADER / NAV ---------- */
-/* Estructura HTML esperada:
-<header class="site-nav">
-  <div class="container nav-inner">
-    <a class="brand" href="/"><img class="logo" src="..." alt=""></a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">☰</button>
-    <nav id="nav-links" class="nav-links"> <ul> <li><a>...</a></li>...</ul></nav>
-  </div>
-</header>
-*/
-
-.site-nav { background: transparent; position: sticky; top:0; z-index:60; backdrop-filter: blur(4px); }
-.nav-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.brand { display:flex; align-items:center; gap:12px; }
-.logo { height:56px; display:block; object-fit:contain; border-radius:50%; }
-
-/* nav links container (desktop) */
-.nav-links { display:flex; gap:18px; align-items:center; }
-.nav-links ul { list-style:none; margin:0; padding:0; display:flex; gap:18px; }
-.nav-links a { padding:8px 10px; border-radius:8px; color:var(--muted); font-weight:600; display:inline-block; }
-.nav-links a:hover, .nav-links a:focus { color:var(--charcoal); background: rgba(31,41,51,0.04); outline:none; }
-
-/* mobile toggle */
-.nav-toggle { display:none; background:transparent; border:1px solid rgba(31,41,51,0.04); padding:8px 10px; border-radius:8px; font-weight:700; cursor:pointer; }
-
-/* accessible focus */
-a:focus, button:focus { outline: 3px solid rgba(138,168,154,0.14); outline-offset: 3px; }
-
-/* ---------- HERO (mobile-first) ---------- */
-.hero { padding: 8px 0 22px; }
-.hero .hero-text h1 { margin-bottom:10px; font-family:var(--serif); font-size:28px; }
-.hero .hero-text p { color:var(--muted); margin-bottom:10px; }
-.hero-actions { display:flex; gap:10px; flex-wrap:wrap; }
-
-/* hero image wrapper */
-.hero .media { margin-top:12px; border-radius:12px; }
-
-/* ---------- SECCIONES GENERALES ---------- */
-section { padding: 28px 0; }
-.tag { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:var(--card-soft); color:var(--muted); font-weight:700; }
-
-/* ---------- TARJETAS / CARD BASE ---------- */
-.card { background:var(--card); border-radius:var(--radius); overflow:hidden; border:1px solid rgba(15,15,15,0.03); box-shadow:0 10px 30px var(--shadow); transition: transform .16s ease, box-shadow .16s ease; }
-.card:hover{ transform: translateY(-6px); box-shadow: 0 20px 50px rgba(15,15,15,0.08); }
-
-/* ---------- ESPECIALIDADES ---------- */
-.specialties .cards { display:grid; grid-template-columns:1fr; gap:18px; }
-.specialties .feature.card { display:flex; gap:12px; align-items:flex-start; padding:12px; background:linear-gradient(180deg,#fbfcfb,#f7f9f8); border-radius:12px; }
-.specialties .feature .media { width:150px; height:110px; min-width:150px; border-radius:10px; overflow:hidden; }
-
-/* ---------- RACIONES / menu-grid ---------- */
-.menu-grid { display:grid; grid-template-columns:1fr; gap:18px; }
-.menu-item.card { display:flex; flex-direction:column; gap:0; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(15,15,15,0.03); background:var(--card); }
-.menu-item .media { height:var(--img-sm); }
-.menu-item .content { padding:14px 16px; }
-.menu-item .title { font-family:var(--serif); font-weight:700; font-size:18px; color:var(--charcoal); }
-.menu-item .desc { color:var(--muted); font-size:0.95rem; }
-.menu-item .price { margin-top:8px; font-weight:800; color:var(--charcoal); }
-
-/* ---------- PUNTOS FUERTES / STRENGTHS (full-bleed) ---------- */
-.strengths { position:relative; padding:40px 0; overflow:visible; }
-.strengths::before { content:""; position:absolute; inset:0; background: linear-gradient(180deg, var(--brand-salvia, var(--brand-salvia)), var(--brand-accent)); z-index:0; pointer-events:none; }
-.strengths .container { position:relative; z-index:1; }
-.strengths h2 { color: #042b2a; font-family:var(--serif); font-size:24px; }
-.strengths p { color: rgba(3,25,25,0.9); }
-
-/* strengths grid mobile-first */
-.strengths .four-col { display:grid; grid-template-columns:1fr; gap:14px; margin-top:12px; }
-.strengths .card .media { height:var(--img-sm); }
-
-/* ---------- MENUS (menu-page) ---------- */
-.menu-page .two-col { display:block; gap:16px; }
-.menu-page .left .media { height:var(--img-md); border-radius:12px; }
-.menu-page .right .menu-offer { display:flex; gap:12px; align-items:flex-start; padding:12px; background:var(--card); border-radius:10px; border:1px solid rgba(15,15,15,0.03); }
-.menu-offer .num { min-width:46px; height:46px; background:var(--card-soft); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--charcoal); }
-.menu-offer .info { flex:1 }
-
-/* ---------- TESTIMONIOS ---------- */
-.testimonials-grid { display:grid; grid-template-columns:1fr; gap:14px; }
-.testimonial-card { padding:14px; border-radius:12px; background:var(--card); }
-
-/* ---------- RESPONSIVE (breakpoints) ---------- */
-@media (min-width: 520px) {
-  .container { padding:24px; }
-  .menu-item .media { height: var(--img-md); }
-  .specialties .feature .media { height: var(--img-md); }
-  .strengths .card .media { height: var(--img-md); }
+body {
+  font-family: var(--font-body);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  line-height: 1.6;
 }
 
-@media (min-width: 900px) {
-  /* header: show full nav */
-  .nav-toggle { display:none; }
-  .nav-links { display:flex; }
-  /* hero becomes 2 cols */
-  .hero { display:grid; grid-template-columns: 1fr 460px; gap:28px; align-items:center; }
-  .hero .media { height: var(--img-lg); border-radius:12px; }
-
-  /* specialties grid 2 col */
-  .specialties .cards { grid-template-columns: repeat(2,1fr); }
-
-  /* strengths grid 2 col */
-  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:18px; }
-
-  /* menu-page two-col layout */
-  .menu-page .two-col { display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:start; }
-  .menu-page .right { display:flex; flex-direction:column; gap:14px; }
-  .menu-page .right .menu-offer { display:grid; grid-template-columns: 56px 1fr; gap:12px; align-items:start; padding:14px; }
-  .menu-page .right .menu-offer .num { width:48px; height:48px; border-radius:8px; }
+/* --- Tipografía y Títulos --- */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  font-weight: 700;
 }
 
-@media (min-width: 1200px) {
-  .container { max-width: 1280px; padding:32px; }
-  .menu-grid.two-col { grid-template-columns: repeat(2,1fr); }
-  .menu-grid.three-col { grid-template-columns: repeat(3,1fr); }
-  .menu-grid.four-col { grid-template-columns: repeat(4,1fr); }
-  .menu-item .media { height: var(--img-lg); }
-  .specialties .feature .media { height: var(--img-lg); }
-  .strengths .four-col { grid-template-columns: repeat(4,1fr); gap:20px; }
+/* --- Menú/Galería (CSS Grid) --- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
 }
 
-/* ---------- NAV MOBILE specifics (override defaults) ---------- */
-@media (max-width: 899px) {
-  .nav-toggle { display:inline-flex; }
-  .nav-links { position: absolute; right: 18px; top: 70px; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(15,15,15,0.06); display: none; z-index: 80; padding: 12px; }
-  .site-nav.open .nav-links { display:block; }
-  .nav-links ul { display:flex; flex-direction:column; gap:8px; }
-  .nav-links a { padding:10px 12px; display:block; border-radius:8px; }
+.menu-item {
+  border: 1px solid #eee;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ---------- Accessibility / defensive ---------- */
-.grid > *, .cards > *, .menu-grid > * { min-width:0; }
-a:focus, button:focus { outline: 3px solid rgba(138,168,154,0.12); outline-offset: 3px; }
+.menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
 
-/* End of style.css */
+/* --- Botones --- */
+.btn-book {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.btn-book:hover {
+  background-color: #b8864b;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
