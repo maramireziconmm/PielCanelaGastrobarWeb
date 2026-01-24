@@ -471,3 +471,113 @@ html, body { overflow-x: hidden !important; }
   display:block;
   object-fit:cover;
 }
+
+
+/* ===== AJUSTE: Menús — imagen más pequeña + cajas para ofertas (sin cambiar HTML) ===== */
+/* Scoped to .menu-page so other sections are respetadas */
+
+.menu-page .two-col {
+  /* left column más pequeña para evitar imagen gigante */
+  display: grid;
+  grid-template-columns: 360px 1fr; /* ajusta 360px -> 320px si quieres aún más pequeña */
+  gap: 24px;
+  align-items: start;
+}
+
+/* Left image: limitar altura y recorte */
+.menu-page .left.long-image,
+.menu-page .left.long-image img {
+  width: 100%;
+  display: block;
+}
+.menu-page .left.long-image img {
+  max-height: 420px;     /* tope de la imagen en desktop */
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15,15,15,0.06);
+}
+
+/* Right column: reset contador y layout vertical */
+.menu-page .right {
+  counter-reset: menuitems;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items: stretch;
+}
+
+/* Convertir cada menu-offer en una caja con espacio para el cajetín numérico */
+.menu-page .right .menu-offer {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15,15,15,0.04);
+  border-radius: 10px;
+  padding: 16px 18px 16px 72px; /* espacio izquierdo para el número */
+  box-shadow: 0 10px 28px rgba(15,15,15,0.06);
+  display: block;
+  overflow: visible;
+}
+
+/* Pseudo-cajetín numérico (automático) */
+.menu-page .right .menu-offer::before {
+  counter-increment: menuitems;
+  content: counter(menuitems);
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  color: var(--accent);
+  background: linear-gradient(180deg,#f3f6f5,#eef3f2);
+  border-radius: 8px;
+  border:1px solid rgba(0,0,0,0.03);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.02);
+  font-size: 0.95rem;
+}
+
+/* Título y texto dentro de la caja */
+.menu-page .right .menu-offer h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.02rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.menu-page .right .menu-offer p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Si el contenido incluye <strong> con precio, colocarlo mejor */
+.menu-page .right .menu-offer p strong {
+  font-weight:800;
+  color: var(--accent);
+  margin-left:6px;
+}
+
+/* Responsive: en móvil apilar la imagen encima y simplificar las cajas */
+@media (max-width: 899px) {
+  .menu-page .two-col { display: block; gap: 18px; }
+  .menu-page .left.long-image img { max-height: 320px; width:100%; height:auto; object-fit:cover; }
+  .menu-page .right .menu-offer {
+    padding: 12px 14px; /* menos indent en móvil */
+    padding-left: 14px;
+  }
+  .menu-page .right .menu-offer::before { display: none; } /* ocultar número en móvil para legibilidad */
+}
+
+/* Defensa: asegurar que la left image no produzca overflow horizontal */
+.menu-page .left.long-image img { max-width: 100%; display:block; }
+
+/* Opcional: pequeño ajuste de fuente/espaciado para pantallas grandes */
+@media (min-width: 1200px) {
+  .menu-page .two-col { grid-template-columns: 420px 1fr; } /* si prefieres imagen algo mayor en pantallas XL */
+  .menu-page .left.long-image img { max-height: 520px; }
+}
