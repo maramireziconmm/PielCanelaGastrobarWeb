@@ -656,10 +656,10 @@ html, body {
   }
 }
 
-/* ===== Especialidades: fondo full-bleed (sólo color), contenido igual ===== */
+/* ===== Solo .strengths full-bleed (📒 Puntos fuertes) ===== */
 
-.specialties {
-  /* hacer que el fondo visual ocupe todo el ancho de la ventana */
+/* Hacemos la sección visualmente full-bleed sin tocar el contenido interno */
+.strengths {
   position: relative;
   left: 50%;
   right: 50%;
@@ -668,43 +668,47 @@ html, body {
   width: 100vw;
   box-sizing: border-box;
 
-  /* color / gradiente como el de strengths (ajusta si quieres otro) */
+  /* fondo turquesa similar al que usamos antes */
   background: linear-gradient(180deg,#48d1c0 0%, #34c6b6 100%);
-  padding-top: 48px;    /* espacio superior dentro de la sección */
-  padding-bottom: 48px; /* espacio inferior dentro de la sección */
+  padding-top: 56px;
+  padding-bottom: 56px;
 }
 
-/* Mantener el contenido centrado y con el max-width habitual */
-.specialties > * {
+/* Mantener el contenido centrado y con el container-width habitual */
+.strengths > .container,
+.strengths .container,
+.strengths .inner {
   max-width: var(--container-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 28px;
-  padding-right: 28px;
+  margin: 0 auto;
+  padding-left: 30px;
+  padding-right: 30px;
   box-sizing: border-box;
 }
 
-/* Asegurar que el título y las tarjetas sigan su estilo original pero con color de texto legible */
-.specialties h2,
-.specialties h3,
-.specialties p,
-.specialties .feature.card {
-  /* si necesitas ajustar color de texto dentro del fondo turquesa, cámbialo aquí */
-  color: #042b2a; /* color oscuro para buen contraste sobre turquesa */
-}
+/* Asegurar contraste de texto dentro de strengths */
+.strengths h2 { color:#042b2a; font-size:40px; margin-bottom:12px; }
+.strengths p { color: rgba(3,25,25,0.9); max-width:80ch; }
 
-/* Si hay tarjetas con fondo gris, se mantienen: suavizamos su contraste sobre turquesa */
-.specialties .feature.card {
-  background: #eef1f4;
-  border: 1px solid rgba(0,0,0,0.04);
-}
+/* Mantener las cards tal y como están (imagen arriba, texto abajo) */
+.strengths .card { background: transparent; padding: 0; border-radius: 8px; color: #042b2a; }
+.strengths .card img { width:100%; height:140px; object-fit:cover; border-radius:8px; display:block; margin-bottom:12px; }
 
-/* Responsive: en pantallas pequeñas seguirán apilándose y el fondo full-bleed permanece */
+/* Responsive: en móvil devolvemos la sección al flujo normal con padding lateral */
 @media (max-width: 900px) {
-  .specialties {
-    padding-top: 28px;
-    padding-bottom: 28px;
+  .strengths {
+    left: auto;
+    right: auto;
+    margin-left: 0;
+    margin-right: 0;
+    width: auto;
+    padding-left: 18px;
+    padding-right: 18px;
   }
-  .specialties > * { padding-left: 18px; padding-right: 18px; }
+  .strengths > .container { padding-left: 0; padding-right: 0; }
+  .strengths h2 { font-size:28px; }
+  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:12px; }
+  @media (max-width:520px) {
+    .strengths .four-col { grid-template-columns: 1fr; }
+  }
 }
 /* Fin de fichero */
