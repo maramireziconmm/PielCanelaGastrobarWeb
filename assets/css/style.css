@@ -1,11 +1,11 @@
-/* Piel Canela — hoja de estilos unificada
-   Sustituye completamente tu assets/css/style.css con este fichero.
-   Contiene: layout, hero, raciones, specialties, strengths (full-bleed),
-   testimonials, footer y reglas responsive.
-   Fecha: 2026-01-24
-*/
+/* ==========================================================
+   Piel Canela — style.css (revisión completa, responsive)
+   Objetivo: layout consistente, imágenes homogéneas, mobile-first
+   Fecha: 2026-01-24 (versión entregada)
+   Reemplaza completamente assets/css/style.css con este fichero
+   ========================================================== */
 
-/* ---------------- Variables y reset ---------------- */
+/* ---------------- Variables y reset (mobile-first) ---------------- */
 :root{
   --bg: #ffffff;
   --muted: #6b7280;
@@ -14,477 +14,286 @@
   --radius: 12px;
   --card-bg: #f7f8f9;
   --container-width: 1100px;
+
+  /* strengths colors */
   --strengths-start: #3fd6cb;
   --strengths-end:  #34c6b6;
   --text-on-strengths: #042b2a;
-  --max-hero-image-height: 560px;
+
+  /* image heights (mobile-first, will scale on larger viewports) */
+  --img-small: 160px;
+  --img-medium: 200px;
+  --img-large: 260px;
+
+  --bp-sm: 520px;
+  --bp-md: 900px;
+  --bp-lg: 1100px;
+  --bp-xl: 1400px;
+
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 * { box-sizing: border-box; }
-html,body { height:100%; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--accent);
-  line-height: 1.6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
+html, body { height: 100%; margin: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { background: var(--bg); color: var(--accent); line-height: 1.6; }
 
-/* Centrado y padding global */
+/* Evitar overflow horizontal por accidente */
+html, body { overflow-x: hidden; }
+
+/* Contenedor central */
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 30px;
+  padding: 18px;
   width: 100%;
 }
 
+/* ---------------- Utilities para imágenes homogéneas ---------------- */
+/* Uso recomendado: envolver la imagen en .media o dar clase .img-cover a la <img> */
+.media {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #f3f5f7;
+}
+
+/* Moderno: use aspect-ratio cuando sea posible para recorte consistente */
+.media.aspect-16-10 { aspect-ratio: 16 / 10; }
+.media.aspect-4-3  { aspect-ratio: 4 / 3; }
+.media.aspect-3-2  { aspect-ratio: 3 / 2; }
+
+/* Fallback: si no hay aspect-ratio (viejos navegadores), limitamos la altura */
+.media .img-cover,
+.img-cover {
+  width: 100%;
+  height: var(--img-medium);
+  object-fit: cover;
+  display: block;
+}
+
+/* On larger viewports we'll increase image heights via media queries */
+
+/* Asegurar que imágenes son interactivas y visibles */
+img { display:block; max-width:100%; height:auto; -webkit-user-drag:auto; user-select:auto; pointer-events:auto; }
+
 /* ---------------- Header / Nav ---------------- */
-.site-nav { position: relative; z-index: 60; padding: 10px 0; background: transparent; }
-.nav-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.site-nav { position: relative; z-index: 60; padding: 12px 0; }
+.nav-inner { display:flex; gap:12px; align-items:center; justify-content:space-between; }
 .logo { height:56px; border-radius:50%; object-fit:contain; display:block; }
-.nav-links { list-style:none; display:flex; gap:28px; margin:0; padding:0; align-items:center; }
-.nav-links a { color:var(--muted); text-decoration:none; padding:8px 6px; border-radius:6px; font-weight:500; }
+.nav-links { list-style:none; display:flex; gap:20px; margin:0; padding:0; align-items:center; }
+.nav-links a { color:var(--muted); text-decoration:none; padding:8px 8px; border-radius:8px; font-weight:600; }
 .nav-links a:hover { color:var(--accent); background: rgba(45,55,72,0.03); }
 
 /* Mobile toggle */
 .nav-toggle { display:none; background:transparent; border:0; padding:8px; border-radius:8px; cursor:pointer; }
-.nav-toggle:focus { outline:2px solid rgba(45,55,72,0.12); }
 
 /* ---------------- Hero ---------------- */
+/* Mobile-first: stacked by default */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 30px;
-  align-items: center;
-  margin-top: 20px;
+  display: block;
+  padding: 8px 0 18px;
+  gap: 18px;
 }
-.hero .hero-text h1 {
-  font-size: 48px;
-  margin: 0 0 16px;
-  line-height:1.02;
-}
-.hero .hero-text p { color: var(--muted); max-width: 640px; }
-.hero-actions { display:flex; gap:12px; margin-top:8px; align-items:center; }
+.hero .hero-text h1 { font-size: 28px; margin: 0 0 12px; line-height: 1.03; }
+.hero .hero-text p { color: var(--muted); margin: 0 0 8px; }
+.hero-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
 
-/* Hero image */
-.hero-image img {
-  width:100%;
-  height:auto;
-  max-height: var(--max-hero-image-height);
-  object-fit: cover;
-  border-radius: 12px;
-  display:block;
-}
+/* Hero image wrapper */
+.hero .media { margin-top: 12px; }
 
-/* Buttons */
-.btn { display:inline-block; padding:12px 18px; border-radius:8px; text-decoration:none; line-height:1; }
-.btn.primary { background:var(--primary-cta); color:white; }
-.btn.outline { background:transparent; border:1px solid var(--primary-cta); color:var(--primary-cta); }
+/* ---------------- Buttons ---------------- */
+.btn { display:inline-block; padding:10px 14px; border-radius:8px; text-decoration:none; line-height:1; font-weight:600; }
+.btn.primary { background: var(--primary-cta); color: #fff; }
+.btn.outline { background: transparent; border: 1px solid var(--primary-cta); color: var(--primary-cta); }
 
-/* ---------------- Sections general ---------------- */
+/* ---------------- Sections common ---------------- */
+section { padding: 28px 0; }
 .tag { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; background:#f1f3f5; color:var(--muted); font-weight:700; }
-.section-title { margin: 0 0 18px; color:var(--accent); }
+h2.section-title { margin: 12px 0 18px; font-size: 28px; color:var(--accent); }
 
-/* ---------------- Essence (NUESTRA ESENCIA) ---------------- */
+/* reset for grid helper if missing */
+.grid { display: grid; gap: 18px; }
+
+/* ---------------- Nuestras Esencias (two-col in desktop) ---------------- */
 .essence {
-  padding: 48px 0;
-  background: linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0));
+  padding-top: 36px;
+  padding-bottom: 36px;
 }
 .essence .two-col {
-  display:grid;
-  grid-template-columns: 1fr 480px;
-  gap:36px;
-  align-items:center;
+  display:block;
 }
-.essence .tag { margin-bottom: 18px; }
-.essence h2 { font-size: 40px; margin: 6px 0 22px; color: var(--accent); line-height:1.05; }
-.essence p { color: var(--muted); font-size:1.02rem; line-height:1.7; max-width: 70ch; }
-.essence .image-card img { width:100%; height:auto; border-radius:12px; object-fit:cover; box-shadow: 0 8px 28px rgba(34,41,47,0.04); }
+.essence .two-col .media { border-radius: 12px; }
 
-/* ---------------- Specialties (mantener estructura) ---------------- */
-.specialties {
-  padding: 44px 0;
+/* ---------------- Specialties (cards with image) ---------------- */
+.specialties .cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
-.specialties h2 { font-size:36px; margin-bottom:18px; color:var(--accent); }
-.specialties .cards { display:grid; grid-template-columns: repeat(2,1fr); gap:18px; }
-.specialties .feature.card { background:#eef1f4; padding:22px; border-radius:10px; border:1px solid rgba(0,0,0,0.04); min-height:160px; color:var(--accent); }
-.specialties .feature .feature-icon { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#3a3f49; color:#fff; margin-bottom:12px; }
-.specialties .feature h3 { margin:6px 0 10px; font-size:20px; }
-.specialties .feature p { color: #4f5963; line-height:1.6; }
-.specialties .cards > .feature.card:nth-child(3) { grid-column: 1 / -1; }
-
-/* ---------------- Strengths (Lo Que Nos Hace Especiales) - full-bleed background ----------------
-   Implementation: we draw the full-bleed background with a ::before so the content (container) remains centered.
-*/
-.strengths {
-  position: relative;
-  padding: 56px 0;
-  overflow: visible;
+.specialties .feature.card {
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.04);
 }
+.specialties .feature .media { margin-bottom:12px; }
+.specialties .feature h3 { margin: 0 0 8px; color: var(--accent); }
+.specialties .feature p { margin: 0; color: #45505a; line-height:1.6; }
 
-/* Full-bleed background layer */
+/* ---------------- Strengths (Puntos fuertes) - full-bleed background ---------------- */
+/* Use ::before for full-bleed background while keeping content centered */
+.strengths { position: relative; margin-top: 12px; margin-bottom: 12px; padding: 36px 0; overflow: visible; }
 .strengths::before {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  background: linear-gradient(180deg, var(--strengths-start) 0%, var(--strengths-end) 100%);
+  inset: 0;
+  background: linear-gradient(180deg, var(--strengths-start), var(--strengths-end));
   z-index: 0;
   pointer-events: none;
 }
+.strengths .container { position: relative; z-index: 1; }
+.strengths .four-col { display:grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
+.strengths .card { background: transparent; padding: 0; }
+.strengths .card .media { margin-bottom: 10px; }
+.strengths h2 { color: var(--text-on-strengths); font-size: 28px; margin: 6px 0 12px; }
 
-/* Put content above background and limit width to main container */
-.strengths > .container {
-  position: relative;
-  z-index: 1;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-/* Tag + title + paragraph styling */
-.strengths .tag { display:inline-flex; align-items:center; gap:8px; background: rgba(255,255,255,0.08); color: var(--text-on-strengths); padding:8px 12px; border-radius:8px; margin-bottom:18px; font-weight:700; border:1px solid rgba(255,255,255,0.08); }
-.strengths h2 { font-size:40px; margin-bottom:14px; color: var(--text-on-strengths); }
-.strengths p { color: rgba(3,25,25,0.9); max-width:80ch; margin-bottom:22px; }
-
-/* Grid of 4 columns inside strengths */
-.strengths .four-col { display:grid; grid-template-columns: repeat(4,1fr); gap:20px; align-items:start; margin-top:6px; }
-.strengths .card { background: transparent; padding:0; border-radius:8px; color: var(--text-on-strengths); }
-.strengths .card img { width:100%; height:140px; object-fit:cover; border-radius:8px; display:block; margin-bottom:12px; box-shadow: 0 8px 18px rgba(15,15,15,0.06); }
-.strengths .card h4 { font-size:18px; margin:6px 0 6px; color: var(--text-on-strengths); }
-
-/* ---------------- Testimonials & Stats ---------------- */
-.testimonials { padding: 48px 0; background: linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0)); }
-.testimonials h2 { font-size:32px; color:var(--accent); margin-bottom:18px; }
-.testimonials-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:20px; margin-bottom:28px; }
-.testimonial-card { background:#fff; border-radius:10px; padding:22px; border:1px solid #e7e8ea; position:relative; min-height:140px; box-shadow: 0 6px 18px rgba(15,15,15,0.02); }
-.testimonial-card::before { content:"“"; position:absolute; left:12px; top:-8px; font-size:44px; color:var(--muted); opacity:0.12; }
-.testimonial-card::after  { content:"”"; position:absolute; right:12px; bottom:-10px; font-size:44px; color:var(--muted); opacity:0.12; }
-.testimonial-card .quote { color:var(--muted); line-height:1.6; margin:0 0 12px 0; }
-.testimonial-card .author { color:var(--accent); font-weight:700; margin-top:8px; }
-
-.testimonial-stats { display:grid; grid-template-columns: repeat(3,1fr); gap:28px; align-items:start; margin-top:8px; }
-.stat-box { background: linear-gradient(180deg,#fff,#fbfbfb); padding:20px; border-radius:10px; text-align:center; border:1px solid #f0f1f3; box-shadow:0 6px 18px rgba(15,15,15,0.02); }
-.stat-number { font-size:48px; font-weight:700; color:var(--accent); margin-bottom:6px; }
-
-/* ---------------- Footer ---------------- */
-.site-footer { background:#fbfbfb; padding:28px 0; margin-top:40px; border-top:1px solid #eee; }
-.footer-grid { display:grid; grid-template-columns: 1fr 1fr auto; gap:16px; align-items:start; }
-.footer-grid a, .site-footer p { word-wrap:break-word; overflow-wrap:break-word; }
-
-/* ---------------- Utility defenses ---------------- */
-.grid, .cards, .menu-grid, .testimonials-grid, .footer-grid { min-width: 0; }
-img { -webkit-user-drag: auto; user-select: auto; /* ensure images visible and interactive */ }
-
-/* ---------------- Responsive rules ---------------- */
-@media (max-width: 1100px) {
-  .hero { grid-template-columns: 1fr 360px; }
-  .menu-grid .menu-item img, .cards img { height: 190px; }
-  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:18px; }
-}
-
-@media (max-width: 900px) {
-  /* Nav mobile */
-  .nav-toggle { display:flex; }
-  .nav-links { display:flex; flex-direction:column; gap:0; margin:0; padding:8px; background:var(--bg); border-radius:8px; box-shadow: 0 8px 24px rgba(34,41,47,0.06); overflow:hidden; max-height:0; transition: max-height 320ms ease, padding 220ms ease; }
-  .site-nav.open .nav-links { max-height:420px; padding:12px; }
-
-  /* Hero stack + order: text & actions first, image after */
-  .hero { grid-template-columns: 1fr; gap:18px; align-items: start; }
-  .hero .hero-text { order: 1; }
-  .hero .hero-actions { order: 1; margin-top:12px; display:flex; gap:12px; flex-wrap:wrap; }
-  .hero .hero-image { order: 2; width:100%; max-width:100%; margin:0 auto; }
-  .hero .hero-image img { max-height:420px; }
-
-  /* Menu grids stack */
-  .menu-grid.four-col, .menu-grid.three-col, .menu-grid.two-col { grid-template-columns: 1fr; }
-  .menu-item.card img { height: 200px; }
-
-  /* Testimonials stack and stats become single column */
-  .testimonials-grid { grid-template-columns: 1fr; gap:14px; }
-  .testimonial-stats { grid-template-columns: 1fr; gap:12px; margin-top:18px; }
-  .stat-number { font-size:40px; }
-
-  /* Strengths: reduce paddings and adapt columns */
-  .strengths { padding-top:36px; padding-bottom:36px; }
-  .strengths > .container { padding-left:18px; padding-right:18px; }
-  .strengths h2 { font-size:28px; }
-  .strengths .four-col { grid-template-columns: repeat(2,1fr); gap:12px; }
-  .strengths .card img { height:200px; }
-}
-
-/* very small screens */
-@media (max-width: 520px) {
-  .strengths .four-col { grid-template-columns:1fr; }
-  .menu-item.card img, .cards img { height:160px; }
-  .hero .hero-text h1 { font-size:36px; }
-  .container { padding:18px; }
-}
-
-/* small visual transitions */
-img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease; }
-.menu-item:hover img, .card:hover img { transform: scale(1.02); }
-
-/* ===== FIX MÓVIL: asegurar stack y texto legible en Essence / Specialties / Strengths ===== */
-@media (max-width: 900px) {
-
-  /* Forzar stack en los layouts que estaban en dos columnas */
-  .essence .two-col,
-  .specialties .specialties-layout,
-  .specialties .cards,
-  .strengths .four-col,
-  .strengths > .container {
-    grid-template-columns: 1fr !important;
-    display: block !important;
-    width: 100% !important;
-  }
-
-  /* Asegurar que los bloques hijos ocupen todo el ancho y no queden con width fijo */
-  .essence .two-col > div,
-  .essence .image-card,
-  .specialties .cards > .feature.card,
-  .specialties .big-image,
-  .strengths .card {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    min-width: 0 !important; /* permite encoger en grid/flex */
-  }
-
-  /* Quitar restricciones de ancho en párrafos para evitar saltos de línea exagerados */
-  .essence .two-col > div:first-child p,
-  .specialties .feature p,
-  .strengths p,
-  .essence p {
-    max-width: none !important;
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-  }
-
-  /* Forzar las imágenes a adaptarse al contenedor (evita scroll interno y recortes raros) */
-  .essence .image-card img,
-  .specialties .big-image img,
-  .specialties .cards img,
-  .strengths .card img,
-  .hero .hero-image img {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-
-  /* Asegurar que hero ordene texto+botones antes que la imagen (ya estaba, reforzamos) */
-  .hero { grid-template-columns: 1fr !important; }
-  .hero .hero-text { order: 1 !important; }
-  .hero .hero-actions { order: 1 !important; }
-  .hero .hero-image { order: 2 !important; }
-
-  /* Evitar scroll horizontal global y en contenedores */
-  html, body, .container, .essence, .specialties, .strengths {
-    overflow-x: hidden !important;
-  }
-
-  /* Ajustes de padding para que no quede contenido pegado al borde */
-  .container, .essence, .specialties, .strengths, .testimonials {
-    padding-left: 18px !important;
-    padding-right: 18px !important;
-  }
-}
-
-/* ===== Menús: imagen izquierda + ofertas numeradas a la derecha =====
-   Añadir al final de assets/css/style.css
-*/
-
-/* Asegurar que la sección two-col usa la altura/align apropiada */
-section.grid.two-col { align-items: start; }
-
-/* Reset contador en la columna derecha */
-section.grid.two-col .right { counter-reset: menuitems; }
-
-/* Estructura de cada oferta: cajetín (número) + contenido */
-.menu-offer {
-  counter-increment: menuitems;
-  display: grid;
-  grid-template-columns: 56px 1fr; /* cajetín + contenido */
-  gap: 14px;
-  align-items: start;
-  background: #f7f9fb;
-  border: 1px solid rgba(0,0,0,0.06);
-  padding: 14px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 6px rgba(15,15,15,0.03);
-}
-
-/* cajetín numérico (izquierda) */
-.menu-offer::before {
-  content: counter(menuitems);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:48px;
-  height:48px;
-  background:#eef6f6;
-  color:var(--accent);
-  font-weight:700;
-  border-radius:6px;
-  border:1px solid rgba(0,0,0,0.04);
-  font-size:1rem;
-}
-
-/* Ajustes del título y texto dentro de la oferta */
-.menu-offer h3 {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
-  color: var(--accent);
-  line-height: 1.1;
-}
-.menu-offer p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.45;
-  font-size: 0.95rem;
-}
-
-/* Imagen grande a la izquierda */
-.left.long-image,
-.long-image {
-  display:block;
-  width:100%;
-}
-.left.long-image img,
-.long-image img {
-  width: 100%;
-  height: 100%;
-  max-height: 720px; /* ajusta si quieres más/menos alto en desktop */
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(34,41,47,0.06);
-  display:block;
-}
-
-/* Si necesitas que la izquierda tenga una altura mínima para igualar la columna derecha */
-.left.long-image { min-height: 520px; }
-
-/* Alineado: asegurar que la columna right se comporta como columna vertical */
-section.grid.two-col .right {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Responsive: en móvil apilar y ocultar cajetín numérico */
-@media (max-width: 900px) {
-  section.grid.two-col { grid-template-columns: 1fr !important; gap: 18px !important; }
-  .left.long-image, .long-image { width: 100%; max-height: 360px; }
-  .menu-offer {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 14px;
-  }
-  .menu-offer::before { display: none; }
-  /* mejorar espaciado en móvil */
-  .right { width: 100%; }
-}
-
-/* Defensas: evitar overflow interno y asegurar que imágenes no queden tapadas */
-.menu-offer, .left.long-image, .long-image img, .right { box-sizing: border-box; max-width: 100%; }
-.left.long-image img { -webkit-user-drag: auto; user-select: auto; pointer-events: auto; }
-
-
-/* ===== PATCH: arreglos de layout y raciones (desktop) ===== */
-
-/* Restaurar comportamiento base .grid y helpers (evita que .grid desaparezca) */
-.grid {
-  display: grid;
-  gap: 24px;
-  box-sizing: border-box;
-}
-
-/* Dos columnas 'two-col' (útil en menus, hero, etc.) */
-.grid.two-col {
-  grid-template-columns: 1fr 420px;
-  align-items: start;
-  gap: 24px;
-}
-
-/* Asegurar que los menu-grid aplican el grid correcto en escritorio */
-.menu-grid.four-col,
-.menu-grid.three-col,
-.menu-grid.two-col {
-  display: grid !important;
+/* ---------------- Menús (left image + right stacked offers) ---------------- */
+section.grid.two-col {
+  display: block;
   gap: 18px;
 }
+.menu-page .two-col {
+  display: block;
+}
+.menu-page .two-col .left,
+.menu-page .two-col .right { width: 100%; }
 
-.menu-grid.four-col { grid-template-columns: repeat(4, 1fr); }
-.menu-grid.three-col { grid-template-columns: repeat(3, 1fr); }
-.menu-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+/* menu-offer styles (mobile first) */
+.menu-offer {
+  counter-increment: menuitems;
+  display: block;
+  background: #f7f9fb;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.menu-offer h3 { margin: 0 0 6px; }
+.menu-offer p { margin: 0; color: var(--muted); }
 
-/* ===== RACIONES: imágenes y tarjetas (se aplica sobre reglas globales) ===== */
-
-/* Forzar que cada tarjeta de raciones tenga un ancho controlado y no expanda la imagen */
+/* ---------------- Raciones / Menu-grid (cards grid) ---------------- */
+.menu-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
 .menu-item.card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   background: #fff;
-  border-radius: 14px;
-  padding: 0;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid #eeeff1;
-  max-width: 100%;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.menu-item.card .media { border-radius: 0; } /* shape handled by card */
+.menu-item.card .media img, .menu-item.card img {
+  width: 100%;
+  height: var(--img-medium);
+  object-fit: cover;
+  display: block;
 }
 
-/* Imágenes de las tarjetas: tamaño fijo en altura y object-fit para recorte uniforme */
-.menu-item.card img {
-  width: 100% !important;
-  height: 180px !important;           /* altura consistente en desktop */
-  max-height: 220px !important;
-  object-fit: cover !important;
-  display: block !important;
-  border-radius: 0; /* la tarjeta tiene border-radius global, la img ya está contenida */
+/* menu-item content */
+.menu-item.card h3 { margin: 12px 16px 6px; color: var(--accent); }
+.menu-item.card p, .menu-item.card .price { margin: 0 16px 16px; color: var(--muted); }
+
+/* ---------------- Testimonials & Stats (kept intact but responsive) ---------------- */
+.testimonials { padding: 36px 0; background: linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0)); }
+.testimonials-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px; }
+.testimonial-card { background:#fff; border-radius:10px; padding:16px; border:1px solid #e7e8ea; box-shadow: 0 6px 18px rgba(15,15,15,0.02); }
+
+/* ---------------- Footer ---------------- */
+.site-footer { background:#fbfbfb; padding: 28px 0; border-top: 1px solid #eee; margin-top: 20px; }
+.footer-grid { display: grid; gap: 12px; }
+
+/* ---------------- Small screens (mobile) ---------------- */
+/* mobile styles already set (mobile-first) - refine breakpoints below */
+
+/* ---------------- Medium / Desktop breakpoints ---------------- */
+@media (min-width: var(--bp-md)) {
+  /* Hero becomes two-columns: text left, image right */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 28px;
+    align-items: center;
+  }
+  .hero .hero-text h1 { font-size: 40px; }
+
+  /* Specialties: 2 columns */
+  .specialties .cards { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+  /* Strengths: 2 -> 4 columns progressively */
+  .strengths .four-col { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (min-width: var(--bp-lg)) {
+    .strengths .four-col { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .strengths h2 { font-size: 36px; }
+  }
+
+  /* Menu-grid: raciones cards on desktop: 4 cols when enough width */
+  .menu-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+  .menu-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+  .menu-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+
+  /* Raciones images bigger on desktop */
+  .menu-item.card img { height: var(--img-large); max-height: 320px; }
+
+  /* Menus page: split left image + right column
+     We expect HTML: <section class="grid two-col menu-page"> with .left and .right children */
+  section.grid.two-col.menu-page,
+  .menu-page .two-col {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 28px;
+    align-items: start;
+  }
+  .menu-page .left.long-image img { max-height: 720px; height: auto; object-fit: cover; border-radius: 12px; }
+  /* Right column: keep stacking offers with counter */
+  .menu-page .right { display: flex; flex-direction: column; gap: 14px; }
+  /* On desktop convert menu-offer to two-column boxed layout with number */
+  .menu-page .right .menu-offer {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 14px;
+  }
+  .menu-page .right .menu-offer::before {
+    content: counter(menuitems);
+    counter-increment: menuitems;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:48px;
+    height:48px;
+    background:#eef6f6;
+    color:var(--accent);
+    border-radius:6px;
+    font-weight:700;
+    border:1px solid rgba(0,0,0,0.04);
+  }
 }
 
-/* Texto / precio dentro de la tarjeta */
-.menu-item.card h3,
-.menu-item.card p,
-.menu-item.card .price {
-  padding: 12px 16px;
-  margin: 0;
-  color: var(--muted);
+/* ---------------- Large desktop tweaks ---------------- */
+@media (min-width: var(--bp-xl)) {
+  .container { padding: 32px; }
+  .hero .hero-text h1 { font-size: 48px; }
+  .menu-page .two-col { grid-template-columns: 1fr 480px; }
+  .menu-item.card img { height: 260px; }
 }
 
-/* Asegurar que .menu-grid hijo no sea forzado a bloquear display por otras reglas */
-.menu-grid { box-sizing: border-box; width: 100%; }
+/* ---------------- Defensive / helpers ---------------- */
+/* ensure flex/grid children can shrink */
+.row, .grid > * , .cards > *, .menu-grid > * { min-width: 0; }
 
-/* ===== Menus (columna izquierda imagen / derecha tarjetas) ajustes finos ===== */
-/* (refuerza regla cuando exists section.grid.two-col con .left .right) */
-section.grid.two-col { display: grid !important; grid-template-columns: 1fr 420px !important; gap: 24px !important; align-items: start !important; }
+/* subtle hover transitions */
+img, .card, .menu-item { transition: transform 180ms ease, box-shadow 180ms ease; }
+.menu-item:hover img, .card:hover img { transform: scale(1.02); }
 
-/* Evitar que reglas globales que usen height:100% afecten a estas imágenes específicas */
-.left.long-image img,
-.long-image img,
-.menu-item.card img,
-.strengths .card img {
-  height: auto !important;
-  max-height: 720px !important;
-  object-fit: cover !important;
-}
-
-/* Para desktop amplio (opcionales): asegurar que la left image no crezca demasiado
-   y deje espacio para la columna derecha */
-@media (min-width: 1200px) {
-  section.grid.two-col { grid-template-columns: 1fr 460px !important; }
-  .left.long-image { min-height: 520px; }
-}
-
-/* Mantener las reglas responsive ya definidas (mp <= 900) inalteradas */
-/* (no añadimos !important en los media queries ya existentes) */
-
-/* Defensa final: evitar overflow horizontal por elementos puntuales */
-html, body, .container, main { overflow-x: hidden; }
+/* End of style.css */
