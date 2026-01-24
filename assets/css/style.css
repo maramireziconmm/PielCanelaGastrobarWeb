@@ -5,13 +5,6 @@
 
 :root{
   --bg:#ffffff;
-  --muted:#6b7280;/* Piel Canela — estilos principales (actualizado)
-   Incluye: menú móvil funcional, tarjetas raciones móviles y testimonios/estadísticas visuales.
-   Fecha: 2026-01-23
-*/
-
-:root{
-  --bg:#ffffff;
   --muted:#6b7280;
   --accent:#2b2f36;
   --primary:#2e3a47;
@@ -324,64 +317,5 @@ img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease
 
 /* Fallback: si la imagen no existe, fondo suave */
 .menu-item img[alt], .card img[alt] { background: linear-gradient(180deg,#f8fafb,#f3f5f7); }
-/* ===== ARREGLO: hero (especialidades) y prevención de overflow ===== */
 
-/* Forzar que contenedores en grid/flex puedan encoger */
-.hero, .nav-inner, .footer-grid, .grid, .cards, .menu-grid {
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* Imagen hero: comportamiento seguro */
-.hero-image, .hero-image img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  box-sizing: border-box;
-}
-
-/* Media query defensiva: forzar stack en pantallas pequeñas */
-@media (max-width: 900px) {
-  /* Forzamos 1 columna en hero y evitamos overflow */
-  .hero {
-    grid-template-columns: 1fr !important;
-    gap: 18px;
-    align-items: start;
-    overflow: visible;
-  }
-
-  /* Aseguramos orden: texto arriba, imagen abajo (mejor UX) */
-  .hero .hero-text { order: 1; }
-  .hero .hero-image { order: 2; }
-
-  /* Limitamos la anchura de la imagen lateral y la centramos */
-  .hero .hero-image {
-    width: 100%;
-    max-width: 420px; /* tope razonable si la quieres pequeña */
-    margin-left: 0;
-    margin-right: 0;
-    margin-inline: auto;
-  }
-
-  .hero .hero-image img {
-    width: 100%;
-    height: auto;
-    max-height: 420px;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-}
-
-/* Regla defensiva extra: evita scroll horizontal por poco */
-html, body {
-  overflow-x: hidden;
-}
-
-/* Si algún hijo dentro del grid tuviera min-width por defecto, forzamos que se reduzca */
-.card, .menu-item.card, .testimonial-card, .stat-box {
-  min-width: 0;
-  box-sizing: border-box;
-}
 /* Fin de fichero */
