@@ -40,6 +40,15 @@ body {
   width: 100%;
 }
 
+/* ===== Helper grid (restaura comportamiento .grid y .two-col) ===== */
+.grid { display: grid; gap: 24px; }
+
+.grid.two-col {
+  /* Dos columnas: contenido flexible a la izquierda y columna fija a la derecha */
+  grid-template-columns: 1fr 420px;
+  align-items: start;
+  gap: 24px;
+}
 /* ---------------- Header / Nav ---------------- */
 .site-nav { position: relative; z-index: 60; padding: 10px 0; background: transparent; }
 .nav-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; }
