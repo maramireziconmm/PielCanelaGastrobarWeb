@@ -226,3 +226,45 @@ img { -webkit-user-drag: auto; user-select: auto; /* ensure images visible and i
 /* small visual transitions */
 img, .card, .menu-item { transition: transform 200ms ease, box-shadow 200ms ease; }
 .menu-item:hover img, .card:hover img { transform: scale(1.02); }
+
+/* Strengths: full-bleed background (via ::before) + ensure content above it */
+.strengths {
+  position: relative;
+  padding: 56px 0;
+  overflow: visible;
+}
+
+/* background layer (full width) */
+.strengths::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, var(--strengths-start), var(--strengths-end));
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* content container must be positioned above the background */
+.strengths > .container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* ensure images are visible and interactive */
+.strengths .card img,
+.strengths img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  pointer-events: auto;
+}
+
+/* keep grid layout and responsive behavior as before */
+.strengths .four-col { display:grid; grid-template-columns: repeat(4,1fr); gap:20px; }
+@media (max-width: 1100px) { .strengths .four-col { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 520px) { .strengths .four-col { grid-template-columns: 1fr; } }
