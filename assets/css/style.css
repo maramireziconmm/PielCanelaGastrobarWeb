@@ -581,3 +581,26 @@ html, body { overflow-x: hidden !important; }
   .menu-page .two-col { grid-template-columns: 420px 1fr; } /* si prefieres imagen algo mayor en pantallas XL */
   .menu-page .left.long-image img { max-height: 520px; }
 }
+.postres {
+    margin-top: 60px;
+}
+
+.postres ul {
+    list-style: none;
+    padding: 0;
+}
+
+.postres li {
+    margin-bottom: 8px;
+}
+
+.precio-unico {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.nota {
+    font-size: 0.9rem;
+    color: #777;
+}
