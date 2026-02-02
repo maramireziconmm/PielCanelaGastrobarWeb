@@ -581,26 +581,110 @@ html, body { overflow-x: hidden !important; }
   .menu-page .two-col { grid-template-columns: 420px 1fr; } /* si prefieres imagen algo mayor en pantallas XL */
   .menu-page .left.long-image img { max-height: 520px; }
 }
-.postres {
-    margin-top: 60px;
+/* ===== POSTRES (RACIONES) ===== */
+.desserts-section{
+  margin: 56px auto 0;
+  max-width: 1120px;
+  padding: 0 16px;
 }
 
-.postres ul {
-    list-style: none;
-    padding: 0;
+.desserts-header{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.postres li {
-    margin-bottom: 8px;
+.desserts-header h2{
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
 }
 
-.precio-unico {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    font-weight: 600;
+.desserts-price{
+  background: #f4f6f8;
+  border: 1px solid #e6eaee;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
 }
 
-.nota {
-    font-size: 0.9rem;
-    color: #777;
+.desserts-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+/* Imagen controlada */
+.desserts-media{
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f4f6f8;
+  border: 1px solid #e6eaee;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+}
+
+.desserts-media img{
+  width: 100%;
+  height: 360px;          /* <-- limita el tamaño */
+  object-fit: cover;      /* <-- recorta sin deformar */
+  display: block;
+}
+
+/* Cards estilo “cajas” */
+.desserts-cards{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.dessert-card{
+  position: relative;
+  background: #f4f6f8;
+  border: 1px solid #e6eaee;
+  border-radius: 16px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.dessert-card h3{
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.dessert-card p{
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.dessert-tag{
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: #ffffff;
+  border: 1px solid #e6eaee;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+/* “a consultar” con un toque distinto */
+.dessert-card--note{
+  border-style: dashed;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .desserts-grid{
+    grid-template-columns: 1fr;
+  }
+  .desserts-media img{
+    height: 260px;
+  }
 }
