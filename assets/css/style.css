@@ -688,3 +688,61 @@ html, body { overflow-x: hidden !important; }
     height: 260px;
   }
 }
+
+/* =========================
+   BLOQUE INFO LOCAL (NAP)
+   ========================= */
+
+.local-info {
+  max-width: 1100px;
+  margin: 48px auto 0 auto;
+  padding: 28px 32px;
+  background: #f6f7f9;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(34, 41, 47, 0.06);
+}
+
+.local-info h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c2f36;
+}
+
+.local-info p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4f5963;
+}
+
+.local-info strong {
+  color: #2c2f36;
+  font-weight: 600;
+}
+
+.local-info a {
+  color: #2c2f36;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.local-info a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .local-info {
+    padding: 22px 20px;
+    margin-top: 36px;
+  }
+
+  .local-info h2 {
+    font-size: 1.3rem;
+  }
+
+  .local-info p {
+    font-size: 0.95rem;
+  }
+}
