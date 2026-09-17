@@ -32,17 +32,17 @@ Lista completa de imágenes referenciadas (subir a assets/images/):
 - 1-Chuleta.jpg
 - 2-Cachopo.jpg
 - 3-Entrcot.jpg
-- 4-Secreto Ibérico.jpg
+- 4-Secreto-Iberico.jpg
 - 5-Rodaballo-4.jpg
-- 6-Bacalao al ajoarriero.jpg
-- 7-CroquetasJamón.jpg
+- 6-Bacalao-al-ajoarriero.jpg
+- 7-CroquetasJamon.jpg
 - 8-CroquetasRaboToro.jpg
 - 9-CroquetasLangostino.jpg
 - 10-PulpoGallega.jpg
 - 11-Carpacciochuleta.jpg
 - 12-Esparragos.jpg
 - 13-Alcachofas.jpg
-- 14-Zamburiñas.jpg
+- 14-Zamburinas.jpg
 - 15-Chipirones.jpg
 - 16-Sepia.jpg
 - 17-Calamares.jpg
@@ -51,10 +51,10 @@ Lista completa de imágenes referenciadas (subir a assets/images/):
 - 20-Cecina.jpg
 - 21-Torrezno.jpg
 - 22-LagrimasPollo.jpg
-- 23-Cazuela de Gambas al ajillo.jpg
-- 24-Lacón con pimientos.jpg
-- 25-Ensaladilla rusa con ventresca.jpg
-- 26-Tortilla de patata.jpg
+- 23-Cazuela-de-Gambas-al-ajillo.jpg
+- 24-Lacon-con-pimientos.jpg
+- 25-Ensaladilla-rusa-con-ventresca.jpg
+- 26-Tortilla-de-patata.jpg
 - 27-Bravas.jpg
 - 28-EnsaladaVentresca.jpg
 - 29-EnsaladaAhumados.jpg
