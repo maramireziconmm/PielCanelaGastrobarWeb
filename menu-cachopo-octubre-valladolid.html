@@ -79,8 +79,13 @@
     .offer-price{ display:flex; align-items:baseline; gap:10px; margin:18px 0; }
     .offer-price .amount{ font-size:3rem; font-weight:800; line-height:1; background: linear-gradient(135deg, var(--strengths-start,#3fd6cb), var(--strengths-end,#34c6b6)); -webkit-background-clip:text; background-clip:text; color:transparent; }
     .offer-price .label{ color:var(--muted); font-size:1rem; }
-    .offer-media{ position:relative; border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(var(--shadow-color),0.18); }
-    .offer-media video, .offer-media img{ width:100%; display:block; }
+    .offer-media{ position:relative; border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(var(--shadow-color),0.18); aspect-ratio:4/3; }
+    .offer-media video, .offer-media img{ width:100%; height:100%; display:block; object-fit:cover; }
+    .offer-media.carousel img{ position:absolute; inset:0; opacity:0; transition:opacity 900ms ease; }
+    .offer-media.carousel img.is-active{ opacity:1; }
+    .offer-media .carousel-dots{ position:absolute; left:0; right:0; bottom:14px; display:flex; justify-content:center; gap:8px; z-index:2; }
+    .offer-media .carousel-dots span{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.5); transition:background 300ms ease, transform 300ms ease; }
+    .offer-media .carousel-dots span.is-active{ background:#fff; transform:scale(1.25); }
     .menu-courses{ margin:28px 0; border:1px solid var(--border); border-radius:16px; overflow:hidden; }
     .menu-courses .course{ padding:16px 20px; border-bottom:1px solid var(--border); }
     .menu-courses .course:last-child{ border-bottom:none; }
@@ -181,8 +186,11 @@
         <p class="offer-terms">Menú disponible durante todo octubre, mínimo 2 personas, sujeto a disponibilidad. No acumulable con otras promociones.</p>
       </div>
 
-      <div class="offer-media">
-        <img src="assets/images/menu-octubre-cachopo.jpg" alt="Cachopo de ternera con patatas fritas y pimientos de padrón" loading="eager" decoding="async" width="1600" height="1200" />
+      <div class="offer-media carousel" id="menu-carousel">
+        <img src="assets/images/menu-octubre-cachopo.jpg" alt="Cachopo de ternera con patatas fritas y pimientos de padrón" loading="eager" decoding="async" class="is-active" />
+        <img src="assets/images/menu-octubre-croquetas-jamon.jpg" alt="Croquetas de jamón" loading="lazy" decoding="async" />
+        <img src="assets/images/menu-octubre-esparragos-codorniz.jpg" alt="Espárragos con codorniz escabechada" loading="lazy" decoding="async" />
+        <div class="carousel-dots"><span class="is-active"></span><span></span><span></span></div>
       </div>
     </section>
 
@@ -202,7 +210,7 @@
         </div>
       </article>
       <article class="card">
-        <img src="assets/images/menu-octubre-cachopo.jpg" alt="Cachopo de ternera" loading="lazy" decoding="async" />
+        <img src="assets/images/menu-octubre-cachopo.jpg" alt="Cachopo de ternera con patatas fritas y pimientos de padrón" loading="lazy" decoding="async" />
         <div class="card-body">
           <h3 style="margin:0 0 6px">Cachopo de ternera</h3>
           <p style="margin:0" class="muted-text">Con patatas fritas caseras y pimientos de padrón, el plato estrella del menú.</p>
@@ -280,5 +288,21 @@
 </footer>
   <script src="assets/js/includes.js"></script>
   <script src="assets/js/app.js"></script>
+  <script>
+    (function(){
+      var wrap = document.getElementById('menu-carousel');
+      if(!wrap) return;
+      var imgs = wrap.querySelectorAll('img');
+      var dots = wrap.querySelectorAll('.carousel-dots span');
+      var i = 0;
+      setInterval(function(){
+        imgs[i].classList.remove('is-active');
+        dots[i].classList.remove('is-active');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('is-active');
+        dots[i].classList.add('is-active');
+      }, 4000);
+    })();
+  </script>
 </body>
 </html>
